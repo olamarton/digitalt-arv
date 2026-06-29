@@ -1,0 +1,281 @@
+import type { Metadata } from 'next'
+import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Logga in — Digitalt Arv',
+}
+
+export default function HomePage() {
+  return (
+    <main className="min-h-dvh flex flex-col" style={{ background: 'var(--bg-primary)' }}>
+      {/* Demo-badge */}
+      <div
+        style={{
+          background: 'rgba(245,158,11,0.12)',
+          borderBottom: '1px solid rgba(245,158,11,0.2)',
+          padding: '0.5rem 1rem',
+          textAlign: 'center',
+        }}
+      >
+        <span className="badge-demo">Demo-läge — ingen riktig BankID-koppling ännu</span>
+      </div>
+
+      <div className="flex flex-1 flex-col lg:flex-row">
+        {/* ─── Vänster: Hero ─────────────────────────────── */}
+        <div
+          className="flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-24"
+          style={{
+            flex: '1 1 55%',
+            background: 'linear-gradient(135deg, #0D1F1C 0%, #162E2A 100%)',
+          }}
+        >
+          {/* Logotyp */}
+          <div className="mb-12">
+            <div
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.625rem',
+              }}
+            >
+              <div
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  background: 'var(--teal-brand)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.25rem',
+                }}
+                aria-hidden="true"
+              >
+                🌿
+              </div>
+              <span
+                style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 800,
+                  color: 'var(--text-primary)',
+                  letterSpacing: '-0.02em',
+                }}
+              >
+                Digitalt Arv
+              </span>
+            </div>
+          </div>
+
+          {/* Rubrik */}
+          <h1
+            style={{
+              fontSize: 'clamp(2.25rem, 5vw, 3.5rem)',
+              fontWeight: 800,
+              lineHeight: 1.1,
+              letterSpacing: '-0.03em',
+              marginBottom: '1.5rem',
+              maxWidth: '18ch',
+            }}
+          >
+            Din digitala
+            <br />
+            <span style={{ color: 'var(--teal-light)' }}>döstädning</span>
+          </h1>
+
+          <p
+            style={{
+              fontSize: '1.125rem',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.7,
+              maxWidth: '44ch',
+              marginBottom: '2.5rem',
+            }}
+          >
+            Samla dina lösenord, sociala konton och sista hälsningar på ett tryggt ställe.
+            När det händer — sköter Digitalt Arv resten automatiskt.
+          </p>
+
+          {/* Funktioner */}
+          <ul
+            style={{
+              listStyle: 'none',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.875rem',
+            }}
+          >
+            {[
+              { icon: '🔐', text: 'BankID-inloggning — ingen separat registrering' },
+              { icon: '📱', text: 'Sociala konton — instruktioner för varje plattform' },
+              { icon: '💌', text: 'Sista hälsning — krypterad, levereras automatiskt' },
+              { icon: '🔔', text: 'SPAR-bevakning — aktiveras utan att anhöriga behöver ringa' },
+            ].map(({ icon, text }) => (
+              <li
+                key={text}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  fontSize: '0.9375rem',
+                  color: 'var(--text-secondary)',
+                }}
+              >
+                <span
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 8,
+                    background: 'rgba(77,182,168,0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    fontSize: '0.875rem',
+                  }}
+                  aria-hidden="true"
+                >
+                  {icon}
+                </span>
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* ─── Höger: Login-kort ─────────────────────────── */}
+        <div
+          className="flex items-center justify-center px-6 py-12 lg:py-0"
+          style={{
+            flex: '1 1 45%',
+            background: 'var(--bg-secondary)',
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: 420,
+            }}
+          >
+            <div className="card">
+              <h2
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 800,
+                  marginBottom: '0.5rem',
+                  color: 'var(--text-primary)',
+                }}
+              >
+                Logga in
+              </h2>
+              <p
+                style={{
+                  fontSize: '0.9375rem',
+                  color: 'var(--text-secondary)',
+                  marginBottom: '2rem',
+                }}
+              >
+                Använd ditt BankID för säker inloggning.
+              </p>
+
+              {/* BankID-knapp */}
+              <Link href="/auth/bankid" className="btn-bankid">
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 512 512"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <rect width="512" height="512" rx="80" fill="#193E4F" />
+                  <text
+                    x="256"
+                    y="310"
+                    textAnchor="middle"
+                    fontSize="200"
+                    fontWeight="900"
+                    fill="white"
+                    fontFamily="serif"
+                  >
+                    B
+                  </text>
+                </svg>
+                Logga in med BankID
+              </Link>
+
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  margin: '1.5rem 0',
+                }}
+              >
+                <div style={{ flex: 1, height: 1, background: 'rgba(77,182,168,0.15)' }} />
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+                  eller
+                </span>
+                <div style={{ flex: 1, height: 1, background: 'rgba(77,182,168,0.15)' }} />
+              </div>
+
+              {/* Demo-inloggning */}
+              <Link href="/app/dashboard" className="btn-secondary" style={{ width: '100%' }}>
+                🧪 Prova utan BankID (demo)
+              </Link>
+
+              <p
+                style={{
+                  fontSize: '0.8125rem',
+                  color: 'var(--text-muted)',
+                  textAlign: 'center',
+                  marginTop: '1.5rem',
+                  lineHeight: 1.5,
+                }}
+              >
+                Genom att logga in godkänner du vår{' '}
+                <a
+                  href="/integritet"
+                  style={{ color: 'var(--teal-light)', textDecoration: 'none' }}
+                >
+                  integritetspolicy
+                </a>{' '}
+                och GDPR-villkor.
+              </p>
+            </div>
+
+            {/* Prisplan-info */}
+            <div
+              style={{
+                marginTop: '1.5rem',
+                padding: '1rem',
+                borderRadius: 'var(--radius-md)',
+                background: 'rgba(196,164,90,0.08)',
+                border: '1px solid rgba(196,164,90,0.15)',
+                display: 'flex',
+                gap: '0.75rem',
+                alignItems: 'flex-start',
+              }}
+            >
+              <span style={{ fontSize: '1.25rem' }} aria-hidden="true">✨</span>
+              <div>
+                <p
+                  style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: 'var(--gold)',
+                    marginBottom: '0.25rem',
+                  }}
+                >
+                  Gratis att komma igång
+                </p>
+                <p style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>
+                  Vita Arkivet, BankID, 3 kontakter och 1 textmeddelande ingår alltid gratis.
+                  Premium från 49 kr/mån.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}

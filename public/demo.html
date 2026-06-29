@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0D1F1C">
+<title>Digitalt Arv — Säkra ditt digitala eftermäle</title>
+<style>
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════ */
+:root {
+  --bg:        #0D1F1C;
+  --surface:   #162E2A;
+  --surface2:  #1C3D38;
+  --surface3:  #234A44;
+  --border:    rgba(255,255,255,0.08);
+  --accent:    #2D8A7E;
+  --accent2:   #4DB6A8;
+  --gold:      #C4A45A;
+  --green:     #4ade80;
+  --red:       #f87171;
+  --text:      #F0F7F6;
+  --text2:     #8BB8B3;
+  --text3:     #4A7A74;
+  --radius:    14px;
+  --radius-sm: 8px;
+  --shadow:    0 8px 32px rgba(0,0,0,0.4);
+  --transition: 0.2s ease;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════
+   SCREENS
+═══════════════════════════════════════ */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ═══════════════════════════════════════
+   AUTH SCREEN
+═══════════════════════════════════════ */
+#auth-screen {
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(45,138,126,0.15) 0%, transparent 70%);
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 32px;
+  box-shadow: var(--shadow);
+}
+
+.auth-logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.auth-logo .logo-icon {
+  width: 64px; height: 64px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(45,138,126,0.4);
+}
+.auth-logo h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
+.auth-logo p { color: var(--text2); font-size: 14px; margin-top: 4px; }
+
+.auth-tabs {
+  display: flex;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  margin-bottom: 28px;
+  gap: 3px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  color: var(--text2);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.auth-tab.active {
+  background: var(--accent);
+  color: white;
+}
+
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+.form-group input {
+  width: 100%;
+  padding: 13px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+  transition: var(--transition);
+}
+.form-group input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,138,126,0.15);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  width: 100%;
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  background: var(--surface2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover { background: var(--surface3); }
+.btn-danger {
+  background: rgba(248,113,113,0.15);
+  color: var(--red);
+  border: 1px solid rgba(248,113,113,0.2);
+}
+.btn-danger:hover { background: rgba(248,113,113,0.25); }
+.btn-ghost {
+  background: none;
+  color: var(--text2);
+  padding: 8px 12px;
+}
+.btn-ghost:hover { color: var(--text); background: var(--surface2); }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+.btn-icon { padding: 8px; border-radius: var(--radius-sm); }
+
+.error-msg {
+  background: rgba(248,113,113,0.1);
+  border: 1px solid rgba(248,113,113,0.2);
+  color: var(--red);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 16px;
+  display: none;
+}
+.error-msg.show { display: block; }
+
+/* ═══════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════ */
+#app-screen {
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Top bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand .brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.topbar-brand .brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.user-avatar {
+  width: 36px; height: 36px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+}
+
+/* Content area */
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 90px;
+}
+
+/* Bottom nav */
+.bottomnav {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  z-index: 200;
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  background: none;
+  color: var(--text3);
+  text-decoration: none;
+}
+.nav-item .nav-icon { font-size: 22px; line-height: 1; }
+.nav-item .nav-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3px; }
+.nav-item.active { color: var(--accent2); }
+.nav-item.active .nav-icon { filter: drop-shadow(0 0 6px rgba(77,182,168,0.6)); }
+
+/* ═══════════════════════════════════════
+   PAGE VIEWS
+═══════════════════════════════════════ */
+.page { display: none; padding: 20px; }
+.page.active { display: block; }
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.page-subtitle {
+  color: var(--text2);
+  font-size: 14px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.card-title .card-icon { font-size: 18px; }
+
+/* ═══════════════════════════════════════
+   DASHBOARD
+═══════════════════════════════════════ */
+.dashboard-greeting {
+  margin-bottom: 24px;
+}
+.dashboard-greeting h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.dashboard-greeting p { color: var(--text2); font-size: 14px; margin-top: 4px; }
+
+.progress-ring {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.ring-svg { flex-shrink: 0; }
+.ring-track { fill: none; stroke: var(--surface3); stroke-width: 6; }
+.ring-progress {
+  fill: none;
+  stroke: url(#ringGrad);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.4,0,0.2,1);
+}
+.ring-info { flex: 1; }
+.ring-pct { font-size: 32px; font-weight: 800; letter-spacing: -1px; }
+.ring-label { color: var(--text2); font-size: 13px; margin-bottom: 12px; }
+.ring-steps { display: flex; flex-direction: column; gap: 6px; }
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text2);
+}
+.step-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--surface3);
+  flex-shrink: 0;
+}
+.step-dot.done { background: var(--green); }
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.quick-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.quick-btn:hover { border-color: var(--accent); background: var(--surface2); }
+.quick-btn .qb-icon { font-size: 24px; }
+.quick-btn .qb-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.quick-btn .qb-sub { font-size: 12px; color: var(--text2); }
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+.stat-num { font-size: 24px; font-weight: 800; color: var(--accent2); }
+.stat-label { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ═══════════════════════════════════════
+   SOCIALA KANALER
+═══════════════════════════════════════ */
+.platform-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.platform-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.platform-item:hover { border-color: var(--accent); }
+.platform-item.editing { border-color: var(--accent); background: var(--surface2); }
+.platform-icon { font-size: 24px; flex-shrink: 0; }
+.platform-info { flex: 1; min-width: 0; }
+.platform-name { font-size: 15px; font-weight: 600; }
+.platform-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.platform-action-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--surface3);
+  color: var(--text2);
+  flex-shrink: 0;
+}
+.platform-action-badge.memorial { background: rgba(45,138,126,0.2); color: var(--accent2); }
+.platform-action-badge.delete   { background: rgba(248,113,113,0.15); color: var(--red); }
+.platform-action-badge.farewell { background: rgba(212,168,83,0.15); color: var(--gold); }
+
+.add-platform-btn {
+  width: 100%;
+  background: var(--surface);
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  color: var(--text2);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+.add-platform-btn:hover { border-color: var(--accent); color: var(--accent2); }
+
+/* ═══════════════════════════════════════
+   SISTA HÄLSNING
+═══════════════════════════════════════ */
+.template-picker {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.template-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+}
+.template-card.selected { border-color: var(--accent); }
+.template-card .tc-preview {
+  height: 56px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  overflow: hidden;
+}
+.tc-name { font-size: 12px; font-weight: 600; color: var(--text2); }
+.selected-check {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+.template-card.selected .selected-check { display: flex; }
+
+/* Template previews */
+.preview-klassisk { background: #162E2A; }
+.preview-klassisk .pl1 { width: 60%; height: 4px; background: #8b7355; border-radius: 2px; }
+.preview-klassisk .pl2 { width: 80%; height: 3px; background: #c4b49a; border-radius: 2px; }
+.preview-klassisk .pl3 { width: 50%; height: 3px; background: #d4c9b4; border-radius: 2px; }
+
+.preview-minimalistisk { background: #ffffff; }
+.preview-minimalistisk .pl1 { width: 40%; height: 2px; background: #111; }
+.preview-minimalistisk .pl2 { width: 70%; height: 2px; background: #888; }
+.preview-minimalistisk .pl3 { width: 55%; height: 2px; background: #ccc; }
+
+.preview-modern { background: linear-gradient(135deg, #0D1F1C, #162E2A); }
+.preview-modern .pl1 { width: 50%; height: 4px; background: #2D8A7E; border-radius: 20px; }
+.preview-modern .pl2 { width: 75%; height: 3px; background: rgba(45,138,126,0.4); border-radius: 20px; }
+.preview-modern .pl3 { width: 60%; height: 3px; background: rgba(45,138,126,0.2); border-radius: 20px; }
+
+.farewell-editor textarea {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 16px;
+  resize: vertical;
+  min-height: 160px;
+  outline: none;
+  font-family: inherit;
+  transition: var(--transition);
+}
+.farewell-editor textarea:focus { border-color: var(--accent); }
+.char-count { font-size: 12px; color: var(--text3); text-align: right; margin-top: 6px; }
+
+.image-upload-area {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-bottom: 16px;
+}
+.image-upload-area:hover { border-color: var(--accent); }
+.image-upload-area .upload-icon { font-size: 32px; margin-bottom: 8px; }
+.image-upload-area p { font-size: 13px; color: var(--text2); }
+.image-preview {
+  position: relative;
+  margin-bottom: 16px;
+}
+.image-preview img {
+  width: 100%;
+  border-radius: var(--radius);
+  max-height: 200px;
+  object-fit: cover;
+}
+.image-remove-btn {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(0,0,0,0.7);
+  border: none;
+  color: white;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Farewell preview */
+.farewell-preview {
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-top: 16px;
+}
+.farewell-preview.klassisk {
+  background: #0D1F1C;
+  color: #3d2b1f;
+  font-family: Georgia, serif;
+  border: 1px solid #d4c9b4;
+}
+.farewell-preview.klassisk h3 { color: #8b7355; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+.farewell-preview.klassisk p { font-size: 15px; line-height: 1.7; }
+
+.farewell-preview.minimalistisk {
+  background: #ffffff;
+  color: #111111;
+  border-top: 2px solid #111;
+}
+.farewell-preview.minimalistisk h3 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #888; margin-bottom: 12px; }
+.farewell-preview.minimalistisk p { font-size: 15px; line-height: 1.8; color: #333; }
+
+.farewell-preview.modern {
+  background: linear-gradient(135deg, #0D1F1C 0%, #162E2A 100%);
+  color: #F0F7F6;
+  border: 1px solid rgba(45,138,126,0.3);
+}
+.farewell-preview.modern h3 { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent2); margin-bottom: 12px; }
+.farewell-preview.modern p { font-size: 15px; line-height: 1.7; }
+
+/* ═══════════════════════════════════════
+   KONTON
+═══════════════════════════════════════ */
+.accounts-filter {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.accounts-filter::-webkit-scrollbar { display: none; }
+.filter-chip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.account-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.account-item:hover { border-color: var(--accent); }
+.account-icon { font-size: 22px; flex-shrink: 0; }
+.account-info { flex: 1; min-width: 0; }
+.account-name { font-size: 15px; font-weight: 600; }
+.account-user { font-size: 12px; color: var(--text2); margin-top: 2px; }
+.account-pw-badge {
+  font-size: 16px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════
+   VITA ARKIVET
+═══════════════════════════════════════ */
+.vita-section { margin-bottom: 24px; }
+.vita-section h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+.vita-option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.vita-option {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text2);
+  transition: var(--transition);
+}
+.vita-option.selected { border-color: var(--accent); color: var(--accent2); background: rgba(45,138,126,0.08); }
+.vita-option .vo-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+
+.vita-text-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 15px;
+  padding: 12px 16px;
+  outline: none;
+  font-family: inherit;
+  transition: var(--transition);
+  resize: vertical;
+}
+.vita-text-input:focus { border-color: var(--accent); }
+
+/* ═══════════════════════════════════════
+   MODAL
+═══════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--surface);
+  border-radius: 20px 20px 0 0;
+  padding: 24px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 92vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.modal-desktop { border-radius: 20px; margin: 20px; }
+@media (min-width: 600px) {
+  .modal-overlay { align-items: center; }
+  .modal { border-radius: 20px; margin: 20px; }
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.modal-title { font-size: 18px; font-weight: 700; }
+.modal-close {
+  background: var(--surface2);
+  border: none;
+  color: var(--text2);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.modal-close:hover { background: var(--surface3); color: var(--text); }
+
+.select-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 15px;
+  padding: 12px 16px;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.select-input:focus { border-color: var(--accent); }
+
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--surface3);
+  color: var(--text);
+  padding: 12px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 2000;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: rgba(74,222,128,0.2); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.toast.error   { background: rgba(248,113,113,0.2); color: var(--red);   border: 1px solid rgba(248,113,113,0.3); }
+
+/* ═══════════════════════════════════════
+   LOADING SPINNER
+═══════════════════════════════════════ */
+.loading-overlay {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s;
+}
+.loading-overlay.hidden { opacity: 0; pointer-events: none; }
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--surface3);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════
+   CONTACTS
+═══════════════════════════════════════ */
+.contact-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.contact-avatar {
+  width: 44px; height: 44px;
+  background: var(--surface3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent2);
+  flex-shrink: 0;
+}
+.contact-info { flex: 1; min-width: 0; }
+.contact-name { font-size: 15px; font-weight: 600; }
+.contact-meta { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* Responsive desktop layout */
+@media (min-width: 768px) {
+  #app-screen { flex-direction: row; }
+  .topbar { display: none; }
+  .bottomnav {
+    position: fixed;
+    left: 0; top: 0;
+    width: 220px; height: 100vh;
+    flex-direction: column;
+    border-right: 1px solid var(--border);
+    border-top: none;
+    padding: 24px 12px;
+    gap: 4px;
+    overflow-y: auto;
+  }
+  .nav-item {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    flex: none;
+    width: 100%;
+  }
+  .nav-item .nav-icon { font-size: 20px; }
+  .nav-item .nav-label { font-size: 14px; font-weight: 500; }
+  .nav-item.active { background: rgba(45,138,126,0.15); }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+  }
+  .nav-brand-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .nav-brand-name { font-size: 16px; font-weight: 700; }
+  .nav-spacer { flex: 1; }
+  .app-content { margin-left: 220px; }
+  .page { padding: 32px; max-width: 760px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════════
+     AUTH SCREEN
+════════════════════════════════ -->
+<div class="screen" id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="logo-icon">🏛️</div>
+      <h1>Digitalt Arv</h1>
+      <p>Säkra ditt digitala eftermäle</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login')">Logga in</button>
+      <button class="auth-tab" onclick="switchAuthTab('register')">Skapa konto</button>
+    </div>
+    <div id="auth-error" class="error-msg"></div>
+
+    <!-- Login form -->
+    <div id="login-form">
+      <div class="form-group">
+        <label>E-postadress</label>
+        <input type="email" id="login-email" placeholder="din@email.se" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Lösenord</label>
+        <input type="password" id="login-password" placeholder="Minst 8 tecken" autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary" onclick="login()">Logga in</button>
+    </div>
+
+    <!-- Register form -->
+    <div id="register-form" style="display:none">
+      <div class="form-group">
+        <label>Ditt namn</label>
+        <input type="text" id="reg-name" placeholder="Förnamn Efternamn" autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label>E-postadress</label>
+        <input type="email" id="reg-email" placeholder="din@email.se" autocomplete="email">
+      </div>
+      <div class="form-group">
+        <label>Lösenord</label>
+        <input type="password" id="reg-password" placeholder="Minst 8 tecken" autocomplete="new-password">
+      </div>
+      <button class="btn btn-primary" onclick="register()">Skapa konto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     APP SCREEN
+════════════════════════════════ -->
+<div class="screen" id="app-screen">
+
+  <!-- Top bar (mobile) -->
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-icon">🏛️</div>
+      <span class="brand-name">Digitalt Arv</span>
+    </div>
+    <div class="topbar-user">
+      <div class="user-avatar" id="topbar-avatar" onclick="showPage('settings')">?</div>
+    </div>
+  </div>
+
+  <!-- Bottom nav -->
+  <nav class="bottomnav">
+    <div class="nav-brand" style="display:none">
+      <div class="nav-brand-icon">🏛️</div>
+      <span class="nav-brand-name">Digitalt Arv</span>
+    </div>
+    <button class="nav-item active" onclick="showPage('dashboard')">
+      <span class="nav-icon">🏠</span><span class="nav-label">Hem</span>
+    </button>
+    <button class="nav-item" onclick="showPage('platforms')">
+      <span class="nav-icon">📱</span><span class="nav-label">Kanaler</span>
+    </button>
+    <button class="nav-item" onclick="showPage('farewell')">
+      <span class="nav-icon">💌</span><span class="nav-label">Hälsning</span>
+    </button>
+    <button class="nav-item" onclick="showPage('accounts')">
+      <span class="nav-icon">🔑</span><span class="nav-label">Konton</span>
+    </button>
+    <button class="nav-item" onclick="showPage('vita')">
+      <span class="nav-icon">📖</span><span class="nav-label">Vita</span>
+    </button>
+    <button class="nav-item" onclick="showPage('settings')" style="display:none">
+      <span class="nav-icon">⚙️</span><span class="nav-label">Inställningar</span>
+    </button>
+    <div class="nav-spacer" style="display:none"></div>
+    <button class="nav-item" onclick="logout()" style="display:none">
+      <span class="nav-icon">🚪</span><span class="nav-label">Logga ut</span>
+    </button>
+  </nav>
+
+  <!-- Content -->
+  <div class="app-content">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="page active" id="page-dashboard">
+      <div class="dashboard-greeting">
+        <h2 id="dash-greeting">Välkommen!</h2>
+        <p id="dash-sub">Hantera ditt digitala arv</p>
+      </div>
+
+      <!-- Progress ring -->
+      <div class="progress-ring">
+        <svg class="ring-svg" width="80" height="80" viewBox="0 0 80 80">
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2D8A7E"/>
+              <stop offset="100%" stop-color="#4DB6A8"/>
+            </linearGradient>
+          </defs>
+          <circle class="ring-track" cx="40" cy="40" r="34"/>
+          <circle class="ring-progress" id="ringProgress" cx="40" cy="40" r="34"
+            stroke-dasharray="213.6" stroke-dashoffset="213.6"/>
+        </svg>
+        <div class="ring-info">
+          <div class="ring-pct" id="ringPct">0%</div>
+          <div class="ring-label">Färdigställt</div>
+          <div class="ring-steps" id="ringSteps"></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num" id="stat-platforms">0</div>
+          <div class="stat-label">Kanaler</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-accounts">0</div>
+          <div class="stat-label">Konton</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-contacts">0</div>
+          <div class="stat-label">Kontakter</div>
+        </div>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="quick-actions">
+        <button class="quick-btn" onclick="showPage('platforms')">
+          <span class="qb-icon">📱</span>
+          <span class="qb-title">Sociala kanaler</span>
+          <span class="qb-sub">Lägg till och hantera</span>
+        </button>
+        <button class="quick-btn" onclick="showPage('farewell')">
+          <span class="qb-icon">💌</span>
+          <span class="qb-title">Sista hälsning</span>
+          <span class="qb-sub">Välj mall och skriv</span>
+        </button>
+        <button class="quick-btn" onclick="showPage('accounts')">
+          <span class="qb-icon">🔑</span>
+          <span class="qb-title">Konton</span>
+          <span class="qb-sub">Lösenord och åtgärder</span>
+        </button>
+        <button class="quick-btn" onclick="showPage('vita')">
+          <span class="qb-icon">📖</span>
+          <span class="qb-title">Begravningsönskemål</span>
+          <span class="qb-sub">Begravningsönskemål</span>
+        </button>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="card-icon">🔒</span>Säkerhet &amp; Integritet</div>
+        <p style="font-size:13px;color:var(--text2);line-height:1.6;margin-top:8px;">
+          All data lagras säkert på svenska servrar. Lösenord krypteras med AES-256.
+          Ingen obehörig kan läsa din information.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── SOCIALA KANALER ── -->
+    <div class="page" id="page-platforms">
+      <div class="page-title">📱 Sociala kanaler</div>
+      <div class="page-subtitle">Bestäm vad som ska hända med dina sociala konton. Du kan ange en unik sista hälsning per kanal.</div>
+
+      <div class="platform-list" id="platformList"></div>
+
+      <button class="add-platform-btn" onclick="openPlatformModal()">
+        <span style="font-size:20px">＋</span>
+        Lägg till kanal
+      </button>
+    </div>
+
+    <!-- ── SISTA HÄLSNING ── -->
+    <div class="page" id="page-farewell">
+      <div class="page-title">💌 Sista hälsning</div>
+      <div class="page-subtitle">Välj en mall och skriv ditt personliga meddelande. Du kan även ge varje social kanal en unik hälsning.</div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px"><span class="card-icon">🎨</span>Välj mall</div>
+        <div class="template-picker">
+          <div class="template-card selected" data-template="klassisk" onclick="selectTemplate(this)">
+            <div class="tc-preview preview-klassisk">
+              <div class="pl1"></div><div class="pl2"></div><div class="pl3"></div>
+            </div>
+            <div class="tc-name">Klassisk</div>
+            <div class="selected-check">✓</div>
+          </div>
+          <div class="template-card" data-template="minimalistisk" onclick="selectTemplate(this)">
+            <div class="tc-preview preview-minimalistisk">
+              <div class="pl1"></div><div class="pl2"></div><div class="pl3"></div>
+            </div>
+            <div class="tc-name">Minimalistisk</div>
+            <div class="selected-check">✓</div>
+          </div>
+          <div class="template-card" data-template="modern" onclick="selectTemplate(this)">
+            <div class="tc-preview preview-modern">
+              <div class="pl1"></div><div class="pl2"></div><div class="pl3"></div>
+            </div>
+            <div class="tc-name">Modern</div>
+            <div class="selected-check">✓</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card farewell-editor">
+        <div class="card-title" style="margin-bottom:12px"><span class="card-icon">✍️</span>Ditt meddelande</div>
+        <textarea id="farewellText" placeholder="Skriv ditt meddelande till dina nära och kära..." maxlength="2000"
+          oninput="updateCharCount()"></textarea>
+        <div class="char-count"><span id="charCount">0</span>/2000 tecken</div>
+
+        <div id="imagePreviewWrap" style="display:none" class="image-preview">
+          <img id="imagePreview" src="" alt="Uppladdad bild">
+          <button class="image-remove-btn" onclick="removeImage()">✕</button>
+        </div>
+        <div class="image-upload-area" onclick="document.getElementById('imageInput').click()">
+          <div class="upload-icon">🖼️</div>
+          <p>Klicka för att lägga till ett foto</p>
+        </div>
+        <input type="file" id="imageInput" accept="image/*" style="display:none" onchange="handleImageUpload(event)">
+
+        <button class="btn btn-primary" onclick="saveFarewell()" style="margin-top:8px">Spara hälsning</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px"><span class="card-icon">👁️</span>Förhandsgranskning</div>
+        <div class="farewell-preview klassisk" id="farewellPreview">
+          <h3>Sista hälsning</h3>
+          <p id="previewText" style="color:var(--text2);font-style:italic">Ditt meddelande visas här...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── KONTON ── -->
+    <div class="page" id="page-accounts">
+      <div class="page-title">🔑 Konton &amp; lösenord</div>
+      <div class="page-subtitle">Lägg till dina viktigaste konton. Lösenord krypteras och lagras säkert.</div>
+
+      <div class="accounts-filter" id="accountsFilter">
+        <div class="filter-chip active" data-cat="all" onclick="filterAccounts('all',this)">Alla</div>
+        <div class="filter-chip" data-cat="social"   onclick="filterAccounts('social',this)">Sociala medier</div>
+        <div class="filter-chip" data-cat="email"    onclick="filterAccounts('email',this)">E-post</div>
+        <div class="filter-chip" data-cat="banking"  onclick="filterAccounts('banking',this)">Bank</div>
+        <div class="filter-chip" data-cat="streaming" onclick="filterAccounts('streaming',this)">Streaming</div>
+        <div class="filter-chip" data-cat="other"    onclick="filterAccounts('other',this)">Övrigt</div>
+      </div>
+
+      <div id="accountList"></div>
+
+      <button class="add-platform-btn" onclick="openAccountModal()">
+        <span style="font-size:20px">＋</span>
+        Lägg till konto
+      </button>
+    </div>
+
+    <!-- ── VITA ARKIVET ── -->
+    <div class="page" id="page-vita">
+      <div class="page-title">📖 Begravningsönskemål</div>
+      <div class="page-subtitle">Dina önskemål om begravning och avskedet. Hjälper dina anhöriga att respektera din vilja.</div>
+
+      <div class="card">
+        <div class="vita-section">
+          <h3>Begravningsform</h3>
+          <div class="vita-option-grid" id="vitaBurial">
+            <div class="vita-option" data-val="jordbegravning" onclick="selectVita('burial_type',this)">
+              <span class="vo-icon">⚰️</span>Jordbegravning
+            </div>
+            <div class="vita-option" data-val="kremering" onclick="selectVita('burial_type',this)">
+              <span class="vo-icon">🔥</span>Kremering
+            </div>
+            <div class="vita-option" data-val="naturlig" onclick="selectVita('burial_type',this)">
+              <span class="vo-icon">🌿</span>Naturlig begravning
+            </div>
+            <div class="vita-option" data-val="ingen_preferens" onclick="selectVita('burial_type',this)">
+              <span class="vo-icon">🤷</span>Ingen preferens
+            </div>
+          </div>
+        </div>
+
+        <div class="vita-section">
+          <h3>Ceremonitype</h3>
+          <div class="vita-option-grid" id="vitaCeremony">
+            <div class="vita-option" data-val="religiös" onclick="selectVita('ceremony_type',this)">
+              <span class="vo-icon">⛪</span>Religiös
+            </div>
+            <div class="vita-option" data-val="sekulär" onclick="selectVita('ceremony_type',this)">
+              <span class="vo-icon">🌸</span>Sekulär
+            </div>
+            <div class="vita-option" data-val="liten" onclick="selectVita('ceremony_type',this)">
+              <span class="vo-icon">🤍</span>Liten &amp; intim
+            </div>
+            <div class="vita-option" data-val="ingen" onclick="selectVita('ceremony_type',this)">
+              <span class="vo-icon">🚫</span>Ingen ceremoni
+            </div>
+          </div>
+        </div>
+
+        <div class="vita-section">
+          <h3>🎵 Musik</h3>
+          <textarea class="vita-text-input" id="vitaMusic" rows="2"
+            placeholder="Ex: 'Trollmors vaggsång', 'My Way' av Sinatra..." 
+            oninput="vitaChanged()"></textarea>
+        </div>
+
+        <div class="vita-section">
+          <h3>🌸 Blommor</h3>
+          <textarea class="vita-text-input" id="vitaFlowers" rows="2"
+            placeholder="Ex: Vita liljor, inga blommor, bidrag till välgörenhet..."
+            oninput="vitaChanged()"></textarea>
+        </div>
+
+        <div class="vita-section">
+          <h3>👔 Klädsel</h3>
+          <textarea class="vita-text-input" id="vitaClothing" rows="2"
+            placeholder="Ex: Min marinblå kostym, klänningen i garderoben..."
+            oninput="vitaChanged()"></textarea>
+        </div>
+
+        <div class="vita-section">
+          <h3>💬 Övriga önskemål</h3>
+          <textarea class="vita-text-input" id="vitaPersonal" rows="4"
+            placeholder="Skriv fritt om vad som är viktigt för dig..."
+            oninput="vitaChanged()"></textarea>
+        </div>
+
+        <button class="btn btn-primary" onclick="saveVita()">Spara Begravningsönskemål</button>
+      </div>
+
+      <!-- Betrodda kontakter -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><span class="card-icon">👥</span>Betrodda kontakter</div>
+          <button class="btn btn-secondary btn-sm" onclick="openContactModal()">+ Lägg till</button>
+        </div>
+        <div id="contactList">
+          <p style="color:var(--text2);font-size:14px">Inga kontakter tillagda ännu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="page" id="page-settings">
+      <div class="page-title">⚙️ Inställningar</div>
+      <div class="page-subtitle">Hantera ditt konto</div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px"><span class="card-icon">👤</span>Konto</div>
+        <p style="font-size:14px;color:var(--text2);margin-bottom:16px" id="settings-email"></p>
+        <button class="btn btn-danger" onclick="logout()">Logga ut</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px"><span class="card-icon">ℹ️</span>Om Digitalt Arv</div>
+        <p style="font-size:14px;color:var(--text2);line-height:1.6">
+          Version 1.0 — Beta<br>
+          Ditt digitala arv, säkrat för framtiden.<br><br>
+          All data lagras krypterat på svenska servrar i enlighet med GDPR.
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /app-content -->
+</div><!-- /app-screen -->
+
+<!-- ════════════════════════════════
+     MODALER
+════════════════════════════════ -->
+
+<!-- Platform modal -->
+<div class="modal-overlay" id="platformModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="platformModalTitle">Lägg till kanal</div>
+      <button class="modal-close" onclick="closePlatformModal()">✕</button>
+    </div>
+    <div id="modal-error-platform" class="error-msg"></div>
+
+    <div class="form-group">
+      <label>Plattform</label>
+      <select class="select-input" id="platformType" onchange="platformTypeChanged()">
+        <option value="facebook">📘 Facebook</option>
+        <option value="instagram">📷 Instagram</option>
+        <option value="linkedin">💼 LinkedIn</option>
+        <option value="twitter">🐦 X / Twitter</option>
+        <option value="youtube">▶️ YouTube</option>
+        <option value="tiktok">🎵 TikTok</option>
+        <option value="snapchat">👻 Snapchat</option>
+        <option value="pinterest">📌 Pinterest</option>
+        <option value="reddit">🤖 Reddit</option>
+        <option value="custom">✏️ Annan (ange nedan)</option>
+      </select>
+    </div>
+    <div class="form-group" id="customNameGroup" style="display:none">
+      <label>Plattformens namn</label>
+      <input type="text" id="platformCustomName" placeholder="Ex: Mastodon, BeReal...">
+    </div>
+    <div class="form-group" id="customIconGroup" style="display:none">
+      <label>Ikon (emoji)</label>
+      <input type="text" id="platformCustomIcon" placeholder="🔗" maxlength="4" value="🔗">
+    </div>
+    <div class="form-group">
+      <label>Användarnamn / profillänk</label>
+      <input type="text" id="platformUsername" placeholder="@dittnamn">
+    </div>
+    <div class="form-group">
+      <label>Åtgärd vid bortgång</label>
+      <select class="select-input" id="platformAction">
+        <option value="nothing">Gör ingenting</option>
+        <option value="memorial">Omvandla till minnessida</option>
+        <option value="delete">Radera kontot</option>
+        <option value="farewell">Skicka sista hälsning</option>
+        <option value="private">Gör privat</option>
+      </select>
+    </div>
+    <div class="form-group" id="platformFarewellGroup">
+      <label>Sista hälsning för denna kanal <span style="color:var(--text3)">(valfritt — lämna tomt för att använda generell hälsning)</span></label>
+      <div style="margin-bottom:10px">
+        <label style="font-size:12px;color:var(--text3)">Mall för denna kanal:</label>
+        <select class="select-input" id="platformTemplate" style="margin-top:4px">
+          <option value="klassisk">Klassisk</option>
+          <option value="minimalistisk">Minimalistisk</option>
+          <option value="modern">Modern</option>
+        </select>
+      </div>
+      <textarea class="vita-text-input" id="platformFarewell" rows="4"
+        placeholder="Skriv ett unikt meddelande för just denna kanal..."></textarea>
+    </div>
+    <input type="hidden" id="platformEditId">
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-primary" onclick="savePlatform()" style="flex:1">Spara</button>
+      <button class="btn btn-danger btn-sm" id="deletePlatformBtn" onclick="deletePlatform()" style="display:none">Ta bort</button>
+    </div>
+  </div>
+</div>
+
+<!-- Account modal -->
+<div class="modal-overlay" id="accountModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="accountModalTitle">Lägg till konto</div>
+      <button class="modal-close" onclick="closeAccountModal()">✕</button>
+    </div>
+    <div id="modal-error-account" class="error-msg"></div>
+
+    <div class="form-group">
+      <label>Tjänst</label>
+      <select class="select-input" id="accountType" onchange="accountTypeChanged()">
+        <optgroup label="Sociala medier">
+          <option value="facebook" data-icon="📘" data-cat="social">Facebook</option>
+          <option value="instagram" data-icon="📷" data-cat="social">Instagram</option>
+          <option value="twitter" data-icon="🐦" data-cat="social">X / Twitter</option>
+          <option value="linkedin" data-icon="💼" data-cat="social">LinkedIn</option>
+          <option value="tiktok" data-icon="🎵" data-cat="social">TikTok</option>
+        </optgroup>
+        <optgroup label="E-post">
+          <option value="gmail" data-icon="📧" data-cat="email">Gmail</option>
+          <option value="outlook" data-icon="📮" data-cat="email">Outlook / Hotmail</option>
+          <option value="icloud" data-icon="☁️" data-cat="email">iCloud Mail</option>
+        </optgroup>
+        <optgroup label="Bank &amp; ekonomi">
+          <option value="swedbank" data-icon="🏦" data-cat="banking">Swedbank</option>
+          <option value="seb" data-icon="🏦" data-cat="banking">SEB</option>
+          <option value="nordea" data-icon="🏦" data-cat="banking">Nordea</option>
+          <option value="handelsbanken" data-icon="🏦" data-cat="banking">Handelsbanken</option>
+          <option value="lansforsakringar" data-icon="🏦" data-cat="banking">Länsförsäkringar</option>
+          <option value="swish" data-icon="💸" data-cat="banking">Swish</option>
+          <option value="klarna" data-icon="🛍️" data-cat="banking">Klarna</option>
+        </optgroup>
+        <optgroup label="Streaming">
+          <option value="netflix" data-icon="🎬" data-cat="streaming">Netflix</option>
+          <option value="spotify" data-icon="🎵" data-cat="streaming">Spotify</option>
+          <option value="viaplay" data-icon="📺" data-cat="streaming">Viaplay</option>
+          <option value="svtplay" data-icon="📺" data-cat="streaming">SVT Play</option>
+          <option value="hbo" data-icon="🎥" data-cat="streaming">HBO Max</option>
+          <option value="apple" data-icon="🍎" data-cat="streaming">Apple TV+</option>
+          <option value="youtube_premium" data-icon="▶️" data-cat="streaming">YouTube Premium</option>
+        </optgroup>
+        <optgroup label="Övrigt">
+          <option value="amazon" data-icon="📦" data-cat="other">Amazon</option>
+          <option value="google" data-icon="🔍" data-cat="other">Google-konto</option>
+          <option value="apple_id" data-icon="🍎" data-cat="other">Apple ID</option>
+          <option value="dropbox" data-icon="💾" data-cat="other">Dropbox</option>
+          <option value="custom" data-icon="🔑" data-cat="other">Annan tjänst</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="form-group" id="accountCustomGroup" style="display:none">
+      <label>Tjänstens namn</label>
+      <input type="text" id="accountCustomName" placeholder="Ex: Mitt forum, Skolplattformen...">
+    </div>
+    <div class="form-group">
+      <label>Användarnamn / e-post</label>
+      <input type="text" id="accountUsername" placeholder="din@email.se eller @användarnamn">
+    </div>
+    <div class="form-group">
+      <label>Lösenord <span style="color:var(--text3)">(valfritt — lagras krypterat)</span></label>
+      <input type="password" id="accountPassword" placeholder="Lämna tomt om du inte vill spara">
+    </div>
+    <div class="form-group">
+      <label>Anteckningar</label>
+      <input type="text" id="accountNotes" placeholder="Ex: Stäng av auto-renewal, koden är i kassalådan...">
+    </div>
+    <div class="form-group">
+      <label>Åtgärd vid bortgång</label>
+      <select class="select-input" id="accountAction">
+        <option value="nothing">Gör ingenting</option>
+        <option value="close">Avsluta / stäng konto</option>
+        <option value="transfer">Överlåt till anhörig</option>
+        <option value="memorial">Minnessida</option>
+        <option value="delete">Radera permanent</option>
+      </select>
+    </div>
+    <input type="hidden" id="accountEditId">
+    <div style="display:flex;gap:10px;margin-top:8px">
+      <button class="btn btn-primary" onclick="saveAccount()" style="flex:1">Spara</button>
+      <button class="btn btn-danger btn-sm" id="deleteAccountBtn" onclick="deleteAccount()" style="display:none">Ta bort</button>
+    </div>
+  </div>
+</div>
+
+<!-- Contact modal -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Lägg till kontakt</div>
+      <button class="modal-close" onclick="closeContactModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label>Namn</label>
+      <input type="text" id="contactName" placeholder="Fullständigt namn">
+    </div>
+    <div class="form-group">
+      <label>Relation</label>
+      <select class="select-input" id="contactRelation">
+        <option value="make/maka">Make/Maka</option>
+        <option value="partner">Partner/Sambo</option>
+        <option value="barn">Barn</option>
+        <option value="syskon">Syskon</option>
+        <option value="förälder">Förälder</option>
+        <option value="vän">Nära vän</option>
+        <option value="jurist">Jurist/Advokat</option>
+        <option value="annan">Annan</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>E-post</label>
+      <input type="email" id="contactEmail" placeholder="kontakt@email.se">
+    </div>
+    <div class="form-group">
+      <label>Telefon</label>
+      <input type="tel" id="contactPhone" placeholder="+46 70 xxx xx xx">
+    </div>
+    <button class="btn btn-primary" onclick="saveContact()" style="margin-top:8px">Lägg till kontakt</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const API = 'api.php?action=';
+
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let state = {
+  user: null,
+  token: null,
+  platforms: [],
+  farewell: null,
+  accounts: [],
+  vita: null,
+  contacts: [],
+  currentTemplate: 'klassisk',
+  currentAccountFilter: 'all',
+  vitaData: {},
+};
+
+// ══════════════════════════════════════════
+// API HELPER
+// ══════════════════════════════════════════
+async function api(action, method = 'GET', body = null) {
+  const opts = {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+  };
+  if (state.token) opts.headers['Authorization'] = 'Bearer ' + state.token;
+  if (body) opts.body = JSON.stringify(body);
+
+  const res = await fetch(API + action, opts);
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Något gick fel');
+  return data;
+}
+
+// ══════════════════════════════════════════
+// AUTH
+// ══════════════════════════════════════════
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t,i) => t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register')));
+  document.getElementById('login-form').style.display    = tab === 'login'    ? 'block' : 'none';
+  document.getElementById('register-form').style.display = tab === 'register' ? 'block' : 'none';
+  hideAuthError();
+}
+
+function showAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideAuthError() { document.getElementById('auth-error').classList.remove('show'); }
+
+async function login() {
+  hideAuthError();
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) return showAuthError('Fyll i e-post och lösenord');
+  try {
+    showLoading();
+    const data = await api('login', 'POST', { email, password });
+    setSession(data.token, data.user);
+    await loadUserData();
+    showApp();
+  } catch(e) { showAuthError(e.message); }
+  finally { hideLoading(); }
+}
+
+async function register() {
+  hideAuthError();
+  const name     = document.getElementById('reg-name').value.trim();
+  const email    = document.getElementById('reg-email').value.trim();
+  const password = document.getElementById('reg-password').value;
+  if (!name || !email || !password) return showAuthError('Fyll i alla fält');
+  try {
+    showLoading();
+    const data = await api('register', 'POST', { name, email, password });
+    setSession(data.token, data.user);
+    await loadUserData();
+    showApp();
+  } catch(e) { showAuthError(e.message); }
+  finally { hideLoading(); }
+}
+
+function setSession(token, user) {
+  state.token = token;
+  state.user  = user;
+  localStorage.setItem('da_token', token);
+  localStorage.setItem('da_user', JSON.stringify(user));
+}
+
+function logout() {
+  state.token = null;
+  state.user  = null;
+  localStorage.removeItem('da_token');
+  localStorage.removeItem('da_user');
+  document.getElementById('auth-screen').classList.add('active');
+  document.getElementById('app-screen').classList.remove('active');
+}
+
+// ══════════════════════════════════════════
+// LOAD DATA
+// ══════════════════════════════════════════
+async function loadUserData() {
+  try {
+    const data = await api('me', 'GET');
+    state.platforms = data.platforms || [];
+    state.farewell  = data.farewell || null;
+    state.accounts  = data.accounts || [];
+    state.vita      = data.vita || null;
+    state.contacts  = data.contacts || [];
+    renderAll();
+  } catch(e) {
+    console.error('loadUserData:', e);
+  }
+}
+
+function renderAll() {
+  renderDashboard();
+  renderPlatforms();
+  renderFarewell();
+  renderAccounts();
+  renderVita();
+  renderContacts();
+}
+
+// ══════════════════════════════════════════
+// APP SHELL
+// ══════════════════════════════════════════
+function showApp() {
+  document.getElementById('auth-screen').classList.remove('active');
+  document.getElementById('app-screen').classList.add('active');
+  const u = state.user;
+  document.getElementById('topbar-avatar').textContent = u.name.charAt(0).toUpperCase();
+  document.getElementById('settings-email').textContent = u.name + ' — ' + u.email;
+  showPage('dashboard');
+}
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick')?.includes("'" + name + "'")) n.classList.add('active');
+  });
+}
+
+// ══════════════════════════════════════════
+// DASHBOARD
+// ══════════════════════════════════════════
+function renderDashboard() {
+  const u = state.user;
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'God morgon' : hour < 18 ? 'Hej' : 'God kväll';
+  document.getElementById('dash-greeting').textContent = greeting + ', ' + u.name.split(' ')[0] + '!';
+
+  const hasPlatforms = state.platforms.length > 0;
+  const hasFarewell  = state.farewell?.message?.length > 0;
+  const hasAccounts  = state.accounts.length > 0;
+  const hasVita      = !!(state.vita?.burial_type);
+  const hasContacts  = state.contacts.length > 0;
+
+  const steps = [hasPlatforms, hasFarewell, hasAccounts, hasVita, hasContacts];
+  const done  = steps.filter(Boolean).length;
+  const pct   = Math.round((done / steps.length) * 100);
+
+  document.getElementById('ringPct').textContent = pct + '%';
+  const circ = 213.6;
+  document.getElementById('ringProgress').style.strokeDashoffset = circ - (circ * pct / 100);
+
+  const stepLabels = ['Sociala kanaler', 'Sista hälsning', 'Konton', 'Begravningsönskemål', 'Betrodda kontakter'];
+  document.getElementById('ringSteps').innerHTML = steps.map((s,i) =>
+    `<div class="step-item"><div class="step-dot ${s?'done':''}"></div>${stepLabels[i]}</div>`
+  ).join('');
+
+  document.getElementById('stat-platforms').textContent = state.platforms.length;
+  document.getElementById('stat-accounts').textContent  = state.accounts.length;
+  document.getElementById('stat-contacts').textContent  = state.contacts.length;
+}
+
+// ══════════════════════════════════════════
+// PLATFORMS
+// ══════════════════════════════════════════
+const PLATFORM_META = {
+  facebook: { icon:'📘', name:'Facebook' },
+  instagram:{ icon:'📷', name:'Instagram' },
+  linkedin: { icon:'💼', name:'LinkedIn' },
+  twitter:  { icon:'🐦', name:'X / Twitter' },
+  youtube:  { icon:'▶️', name:'YouTube' },
+  tiktok:   { icon:'🎵', name:'TikTok' },
+  snapchat: { icon:'👻', name:'Snapchat' },
+  pinterest:{ icon:'📌', name:'Pinterest' },
+  reddit:   { icon:'🤖', name:'Reddit' },
+};
+
+const ACTION_LABELS = {
+  nothing:'Inget', memorial:'Minnessida', delete:'Radera',
+  farewell:'Hälsning', private:'Privat'
+};
+
+function renderPlatforms() {
+  const list = document.getElementById('platformList');
+  if (!state.platforms.length) {
+    list.innerHTML = '<p style="color:var(--text2);font-size:14px;margin-bottom:12px">Du har inte lagt till några kanaler ännu.</p>';
+    return;
+  }
+  list.innerHTML = state.platforms.map(p => {
+    const cls = ['memorial','delete','farewell'].includes(p.action) ? p.action : '';
+    return `<div class="platform-item" onclick="editPlatform(${p.id})">
+      <span class="platform-icon">${p.icon || '🔗'}</span>
+      <div class="platform-info">
+        <div class="platform-name">${esc(p.platform_name)}</div>
+        <div class="platform-meta">${p.username ? esc(p.username) : 'Inget användarnamn'}</div>
+      </div>
+      <span class="platform-action-badge ${cls}">${ACTION_LABELS[p.action]||p.action}</span>
+    </div>`;
+  }).join('');
+}
+
+function openPlatformModal(edit = null) {
+  document.getElementById('platformModal').classList.add('open');
+  document.getElementById('platformModalTitle').textContent = edit ? 'Redigera kanal' : 'Lägg till kanal';
+  document.getElementById('deletePlatformBtn').style.display = edit ? 'inline-flex' : 'none';
+  document.getElementById('modal-error-platform').classList.remove('show');
+
+  if (edit) {
+    const p = state.platforms.find(x => x.id == edit);
+    if (!p) return;
+    document.getElementById('platformEditId').value     = p.id;
+    document.getElementById('platformType').value        = p.platform_type;
+    document.getElementById('platformUsername').value    = p.username || '';
+    document.getElementById('platformAction').value      = p.action;
+    document.getElementById('platformFarewell').value    = p.farewell_message || '';
+    document.getElementById('platformTemplate').value    = p.farewell_template || 'klassisk';
+    if (p.platform_type === 'custom') {
+      document.getElementById('platformCustomName').value = p.platform_name;
+      document.getElementById('platformCustomIcon').value = p.icon || '🔗';
+    }
+    platformTypeChanged();
+  } else {
+    document.getElementById('platformEditId').value = '';
+    document.getElementById('platformType').value   = 'facebook';
+    document.getElementById('platformUsername').value = '';
+    document.getElementById('platformAction').value   = 'nothing';
+    document.getElementById('platformFarewell').value = '';
+    document.getElementById('platformTemplate').value = 'klassisk';
+    document.getElementById('platformCustomName').value = '';
+    document.getElementById('platformCustomIcon').value = '🔗';
+    platformTypeChanged();
+  }
+}
+
+function editPlatform(id) { openPlatformModal(id); }
+function closePlatformModal() { document.getElementById('platformModal').classList.remove('open'); }
+
+function platformTypeChanged() {
+  const val = document.getElementById('platformType').value;
+  const isCustom = val === 'custom';
+  document.getElementById('customNameGroup').style.display = isCustom ? 'block' : 'none';
+  document.getElementById('customIconGroup').style.display = isCustom ? 'block' : 'none';
+}
+
+async function savePlatform() {
+  const type    = document.getElementById('platformType').value;
+  const meta    = PLATFORM_META[type];
+  const name    = type === 'custom' ? document.getElementById('platformCustomName').value.trim() : meta?.name || type;
+  const icon    = type === 'custom' ? document.getElementById('platformCustomIcon').value.trim() || '🔗' : meta?.icon || '🔗';
+  const editId  = document.getElementById('platformEditId').value;
+
+  if (!name) { showModalError('platform','Ange ett namn'); return; }
+
+  const payload = {
+    platform_type:     type,
+    platform_name:     name,
+    icon,
+    username:          document.getElementById('platformUsername').value.trim(),
+    action:            document.getElementById('platformAction').value,
+    farewell_message:  document.getElementById('platformFarewell').value.trim(),
+    farewell_template: document.getElementById('platformTemplate').value,
+  };
+
+  try {
+    showLoading();
+    if (editId) {
+      const updated = await api('platforms/' + editId, 'PUT', payload);
+      state.platforms = state.platforms.map(p => p.id == editId ? updated : p);
+    } else {
+      const created = await api('platforms', 'POST', payload);
+      state.platforms.push(created);
+    }
+    closePlatformModal();
+    renderPlatforms();
+    renderDashboard();
+    showToast('Kanal sparad ✓', 'success');
+  } catch(e) { showModalError('platform', e.message); }
+  finally { hideLoading(); }
+}
+
+async function deletePlatform() {
+  const id = document.getElementById('platformEditId').value;
+  if (!id || !confirm('Ta bort denna kanal?')) return;
+  try {
+    await api('platforms/' + id, 'DELETE');
+    state.platforms = state.platforms.filter(p => p.id != id);
+    closePlatformModal();
+    renderPlatforms();
+    renderDashboard();
+    showToast('Kanal borttagen', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+// ══════════════════════════════════════════
+// FAREWELL
+// ══════════════════════════════════════════
+function renderFarewell() {
+  if (!state.farewell) return;
+  document.getElementById('farewellText').value = state.farewell.message || '';
+  state.currentTemplate = state.farewell.template || 'klassisk';
+  updateCharCount();
+  selectTemplateByName(state.currentTemplate);
+  updateFarewellPreview();
+  // Load image separately if needed
+  if (state.farewell.id) loadFarewellImage();
+}
+
+async function loadFarewellImage() {
+  try {
+    const r = await api('farewell/image', 'GET');
+    if (r.image_data) showImagePreview(r.image_data);
+  } catch(e) {}
+}
+
+function selectTemplate(el) {
+  document.querySelectorAll('.template-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.currentTemplate = el.dataset.template;
+  updateFarewellPreview();
+}
+
+function selectTemplateByName(name) {
+  document.querySelectorAll('.template-card').forEach(c => {
+    c.classList.toggle('selected', c.dataset.template === name);
+  });
+  updateFarewellPreview();
+}
+
+function updateFarewellPreview() {
+  const preview = document.getElementById('farewellPreview');
+  preview.className = 'farewell-preview ' + state.currentTemplate;
+  document.getElementById('previewText').textContent =
+    document.getElementById('farewellText').value || 'Ditt meddelande visas här...';
+}
+
+function updateCharCount() {
+  const len = document.getElementById('farewellText').value.length;
+  document.getElementById('charCount').textContent = len;
+  updateFarewellPreview();
+}
+
+function handleImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { showToast('Bilden är för stor (max 5MB)', 'error'); return; }
+  const reader = new FileReader();
+  reader.onload = ev => {
+    state._pendingImage = ev.target.result;
+    showImagePreview(ev.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showImagePreview(src) {
+  document.getElementById('imagePreview').src = src;
+  document.getElementById('imagePreviewWrap').style.display = 'block';
+}
+
+function removeImage() {
+  state._pendingImage = null;
+  state._removeImage = true;
+  document.getElementById('imagePreview').src = '';
+  document.getElementById('imagePreviewWrap').style.display = 'none';
+  document.getElementById('imageInput').value = '';
+}
+
+async function saveFarewell() {
+  const msg = document.getElementById('farewellText').value.trim();
+  const payload = { message: msg, template: state.currentTemplate };
+  if (state._pendingImage)  payload.image_data = state._pendingImage;
+  if (state._removeImage)   payload.image_data = null;
+  try {
+    showLoading();
+    await api('farewell', 'POST', payload);
+    state.farewell = { message: msg, template: state.currentTemplate };
+    state._pendingImage = null;
+    state._removeImage  = null;
+    renderDashboard();
+    showToast('Hälsning sparad ✓', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+// ══════════════════════════════════════════
+// ACCOUNTS
+// ══════════════════════════════════════════
+function renderAccounts() {
+  const list   = document.getElementById('accountList');
+  const filter = state.currentAccountFilter;
+  const items  = filter === 'all' ? state.accounts : state.accounts.filter(a => a.category === filter);
+
+  if (!items.length) {
+    list.innerHTML = `<p style="color:var(--text2);font-size:14px;margin-bottom:12px">${filter==='all'?'Inga konton tillagda ännu.':'Inga konton i denna kategori.'}</p>`;
+    return;
+  }
+  list.innerHTML = items.map(a =>
+    `<div class="account-item" onclick="editAccount(${a.id})">
+      <span class="account-icon">${a.icon||'🔑'}</span>
+      <div class="account-info">
+        <div class="account-name">${esc(a.service_name)}</div>
+        <div class="account-user">${a.username ? esc(a.username) : 'Inget användarnamn'} · ${ACTION_LABELS[a.action]||a.action}</div>
+      </div>
+      <span class="account-pw-badge" title="${a.has_password?'Lösenord sparat':'Inget lösenord'}">${a.has_password?'🔒':'🔓'}</span>
+    </div>`
+  ).join('');
+}
+
+function filterAccounts(cat, el) {
+  state.currentAccountFilter = cat;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderAccounts();
+}
+
+function openAccountModal(editId = null) {
+  document.getElementById('accountModal').classList.add('open');
+  document.getElementById('accountModalTitle').textContent = editId ? 'Redigera konto' : 'Lägg till konto';
+  document.getElementById('deleteAccountBtn').style.display = editId ? 'inline-flex' : 'none';
+  document.getElementById('modal-error-account').classList.remove('show');
+
+  if (editId) {
+    const a = state.accounts.find(x => x.id == editId);
+    if (!a) return;
+    document.getElementById('accountEditId').value   = a.id;
+    document.getElementById('accountType').value     = a.service_type;
+    document.getElementById('accountUsername').value = a.username || '';
+    document.getElementById('accountPassword').value = '';
+    document.getElementById('accountNotes').value    = a.notes || '';
+    document.getElementById('accountAction').value   = a.action;
+    if (a.service_type === 'custom') document.getElementById('accountCustomName').value = a.service_name;
+    accountTypeChanged();
+  } else {
+    document.getElementById('accountEditId').value   = '';
+    document.getElementById('accountType').value     = 'facebook';
+    document.getElementById('accountUsername').value = '';
+    document.getElementById('accountPassword').value = '';
+    document.getElementById('accountNotes').value    = '';
+    document.getElementById('accountAction').value   = 'nothing';
+    document.getElementById('accountCustomName').value = '';
+    accountTypeChanged();
+  }
+}
+
+function editAccount(id) { openAccountModal(id); }
+function closeAccountModal() { document.getElementById('accountModal').classList.remove('open'); }
+
+function accountTypeChanged() {
+  const val = document.getElementById('accountType').value;
+  document.getElementById('accountCustomGroup').style.display = val === 'custom' ? 'block' : 'none';
+}
+
+async function saveAccount() {
+  const type   = document.getElementById('accountType').value;
+  const sel    = document.getElementById('accountType').selectedOptions[0];
+  const name   = type === 'custom' ? document.getElementById('accountCustomName').value.trim() : sel.text;
+  const icon   = sel.dataset.icon || '🔑';
+  const cat    = sel.dataset.cat  || 'other';
+  const editId = document.getElementById('accountEditId').value;
+
+  if (!name) { showModalError('account','Ange ett namn'); return; }
+
+  const payload = {
+    service_type: type,
+    service_name: name,
+    icon, category: cat,
+    username: document.getElementById('accountUsername').value.trim(),
+    password: document.getElementById('accountPassword').value || null,
+    notes:    document.getElementById('accountNotes').value.trim(),
+    action:   document.getElementById('accountAction').value,
+  };
+
+  try {
+    showLoading();
+    if (editId) {
+      await api('accounts/' + editId, 'PUT', payload);
+      const idx = state.accounts.findIndex(a => a.id == editId);
+      if (idx !== -1) state.accounts[idx] = { ...state.accounts[idx], ...payload, has_password: !!(state.accounts[idx].has_password || payload.password) };
+    } else {
+      const created = await api('accounts', 'POST', payload);
+      state.accounts.push(created);
+    }
+    closeAccountModal();
+    renderAccounts();
+    renderDashboard();
+    showToast('Konto sparat ✓', 'success');
+  } catch(e) { showModalError('account', e.message); }
+  finally { hideLoading(); }
+}
+
+async function deleteAccount() {
+  const id = document.getElementById('accountEditId').value;
+  if (!id || !confirm('Ta bort detta konto?')) return;
+  try {
+    await api('accounts/' + id, 'DELETE');
+    state.accounts = state.accounts.filter(a => a.id != id);
+    closeAccountModal();
+    renderAccounts();
+    renderDashboard();
+    showToast('Konto borttaget', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+// ══════════════════════════════════════════
+// VITA ARKIVET
+// ══════════════════════════════════════════
+function renderVita() {
+  if (!state.vita) return;
+  const v = state.vita;
+  state.vitaData = { ...v };
+
+  if (v.burial_type) {
+    document.querySelectorAll('#vitaBurial .vita-option').forEach(o =>
+      o.classList.toggle('selected', o.dataset.val === v.burial_type));
+  }
+  if (v.ceremony_type) {
+    document.querySelectorAll('#vitaCeremony .vita-option').forEach(o =>
+      o.classList.toggle('selected', o.dataset.val === v.ceremony_type));
+  }
+  document.getElementById('vitaMusic').value    = v.music    || '';
+  document.getElementById('vitaFlowers').value  = v.flowers  || '';
+  document.getElementById('vitaClothing').value = v.clothing || '';
+  document.getElementById('vitaPersonal').value = v.personal_note || '';
+}
+
+function selectVita(field, el) {
+  const group = el.closest('[id]');
+  group.querySelectorAll('.vita-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state.vitaData[field] = el.dataset.val;
+}
+
+function vitaChanged() {} // trigger on text change — save on button
+
+async function saveVita() {
+  const payload = {
+    ...state.vitaData,
+    music:         document.getElementById('vitaMusic').value.trim(),
+    flowers:       document.getElementById('vitaFlowers').value.trim(),
+    clothing:      document.getElementById('vitaClothing').value.trim(),
+    personal_note: document.getElementById('vitaPersonal').value.trim(),
+  };
+  try {
+    showLoading();
+    await api('vita', 'POST', payload);
+    state.vita = payload;
+    renderDashboard();
+    showToast('Begravningsönskemål sparat ✓', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+// ══════════════════════════════════════════
+// CONTACTS
+// ══════════════════════════════════════════
+function renderContacts() {
+  const list = document.getElementById('contactList');
+  if (!state.contacts.length) {
+    list.innerHTML = '<p style="color:var(--text2);font-size:14px">Inga kontakter tillagda ännu.</p>';
+    return;
+  }
+  list.innerHTML = state.contacts.map(c =>
+    `<div class="contact-item">
+      <div class="contact-avatar">${c.name.charAt(0)}</div>
+      <div class="contact-info">
+        <div class="contact-name">${esc(c.name)}</div>
+        <div class="contact-meta">${esc(c.relation||'')}${c.email?' · '+esc(c.email):''}</div>
+      </div>
+      <button class="btn btn-ghost btn-icon" onclick="deleteContact(${c.id})">🗑️</button>
+    </div>`
+  ).join('');
+}
+
+function openContactModal()  { document.getElementById('contactModal').classList.add('open'); }
+function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
+
+async function saveContact() {
+  const name = document.getElementById('contactName').value.trim();
+  if (!name) { showToast('Ange ett namn', 'error'); return; }
+  try {
+    showLoading();
+    const c = await api('contacts', 'POST', {
+      name,
+      relation: document.getElementById('contactRelation').value,
+      email:    document.getElementById('contactEmail').value.trim(),
+      phone:    document.getElementById('contactPhone').value.trim(),
+    });
+    state.contacts.push(c);
+    document.getElementById('contactName').value  = '';
+    document.getElementById('contactEmail').value = '';
+    document.getElementById('contactPhone').value = '';
+    closeContactModal();
+    renderContacts();
+    renderDashboard();
+    showToast('Kontakt tillagd ✓', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+  finally { hideLoading(); }
+}
+
+async function deleteContact(id) {
+  if (!confirm('Ta bort kontakten?')) return;
+  try {
+    await api('contacts/' + id, 'DELETE');
+    state.contacts = state.contacts.filter(c => c.id != id);
+    renderContacts();
+    renderDashboard();
+    showToast('Kontakt borttagen', 'success');
+  } catch(e) { showToast(e.message, 'error'); }
+}
+
+// ══════════════════════════════════════════
+// UI HELPERS
+// ══════════════════════════════════════════
+function showLoading() { document.getElementById('loadingOverlay').classList.remove('hidden'); }
+function hideLoading() { document.getElementById('loadingOverlay').classList.add('hidden'); }
+
+let toastTimer;
+function showToast(msg, type = '') {
+  clearTimeout(toastTimer);
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function showModalError(which, msg) {
+  const el = document.getElementById('modal-error-' + which);
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// Enter key on login
+document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+document.getElementById('login-email').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+async function init() {
+  const token = localStorage.getItem('da_token');
+  const user  = localStorage.getItem('da_user');
+
+  if (token && user) {
+    state.token = token;
+    state.user  = JSON.parse(user);
+    try {
+      await loadUserData();
+      showApp();
+      hideLoading();
+      return;
+    } catch(e) {
+      // Token expired, fall through to auth
+      localStorage.removeItem('da_token');
+      localStorage.removeItem('da_user');
+    }
+  }
+
+  hideLoading();
+  document.getElementById('auth-screen').classList.add('active');
+}
+
+init();
+</script>
+</body>
+</html>

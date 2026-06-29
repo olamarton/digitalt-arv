@@ -1,0 +1,44 @@
+{
+  "name": "Digitalt Arv",
+  "short_name": "Digitalt Arv",
+  "description": "Digital döstädning — hantera ditt digitala liv med BankID",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0D1F1C",
+  "theme_color": "#0D1F1C",
+  "orientation": "portrait-primary",
+  "lang": "sv",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/app/dashboard",
+      "description": "Gå till din översikt"
+    },
+    {
+      "name": "Sista hälsning",
+      "url": "/app/farewell",
+      "description": "Redigera din sista hälsning"
+    }
+  ]
+}

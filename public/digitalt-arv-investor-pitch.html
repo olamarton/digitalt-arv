@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitalt Arv - Investor Pitch</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        .nav-menu a {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #667eea;
+        }
+        
+        /* Sections */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-card .number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card .label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Problem Section */
+        .problem {
+            background: white;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .problem-card {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #fc8181;
+        }
+        
+        .problem-card h3 {
+            color: #fc8181;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .problem-card p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        .problem-card .impact {
+            margin-top: 1rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        /* Solution Section */
+        .solution {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .solution-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Interactive Demo */
+        .demo {
+            background: #f7fafc;
+        }
+        
+        .phone-mockup {
+            max-width: 375px;
+            margin: 3rem auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 15px;
+            border: 8px solid #1a202c;
+        }
+        
+        .phone-screen {
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            height: 700px;
+            position: relative;
+        }
+        
+        .screen {
+            display: none;
+            padding: 2rem;
+            height: 100%;
+            overflow-y: auto;
+        }
+        
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .screen-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            margin: -2rem -2rem 2rem -2rem;
+        }
+        
+        .screen-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .bankid-qr {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .demo-controls button {
+            padding: 0.5rem 1.5rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .demo-controls button:hover {
+            background: #764ba2;
+        }
+        
+        .demo-controls button.active {
+            background: #764ba2;
+        }
+        
+        /* Business Model */
+        .business {
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .pricing-card {
+            background: #f7fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .pricing-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pricing-card .price {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .pricing-card .price-period {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .pricing-card ul {
+            list-style: none;
+            margin-top: 2rem;
+            text-align: left;
+        }
+        
+        .pricing-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .pricing-card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: 700;
+        }
+        
+        .pricing-card.featured li:before {
+            color: white;
+        }
+        
+        /* Market Section */
+        .market {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .market-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .market-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .market-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .market-card .big-number {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        /* Tech Section */
+        .tech {
+            background: white;
+        }
+        
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .tech-item {
+            text-align: center;
+            padding: 2rem;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+        
+        .tech-item .tech-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-item h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-item p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        
+        /* Roadmap */
+        .roadmap {
+            background: #f7fafc;
+        }
+        
+        .timeline {
+            position: relative;
+            margin-top: 3rem;
+            padding-left: 3rem;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+        }
+        
+        .timeline-item h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item .phase {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item ul {
+            list-style: none;
+            color: #4a5568;
+            margin-top: 1rem;
+        }
+        
+        .timeline-item li {
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .timeline-item li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+        }
+        
+        /* Team Section */
+        .team {
+            background: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            text-align: center;
+            padding: 2rem;
+            background: #f7fafc;
+            border-radius: 12px;
+        }
+        
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+        
+        .team-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-card .role {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .team-card p {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+        }
+        
+        .cta-btn {
+            padding: 1.5rem 3rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cta-btn.primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .cta-btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .stats,
+            .problem-grid,
+            .solution-features,
+            .pricing-grid,
+            .market-stats,
+            .tech-stack,
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: #718096;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .section-title.light p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">Digitalt Arv</div>
+        <ul class="nav-menu">
+            <li><a href="#hero">Hem</a></li>
+            <li><a href="#problem">Problem</a></li>
+            <li><a href="#solution">Lösning</a></li>
+            <li><a href="#demo">Demo</a></li>
+            <li><a href="#business">Affärsmodell</a></li>
+            <li><a href="#market">Marknad</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <h1>Digitalt Arv</h1>
+            <p class="tagline">Sveriges första automatiserade plattform för digital döstädning</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="number">8.5M</div>
+                    <div class="label">BankID-användare i Sverige</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">127+</div>
+                    <div class="label">Digitala konton per person</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">40h</div>
+                    <div class="label">Anhörigas tid för att stänga konton</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section id="problem" class="problem">
+        <div class="container">
+            <div class="section-title">
+                <h2>Problemet vi löser</h2>
+                <p>När någon dör lämnas anhöriga med en omöjlig uppgift</p>
+            </div>
+            
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>🔒 Låsta digitala liv</h3>
+                    <p>Genomsnittspersonen har 127+ digitala konton. Utan lösenord och instruktioner blir dessa oåtkomliga för anhöriga.</p>
+                    <p class="impact">Resultat: Förlorade minnen, fortsatta avgifter, juridiska problem</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>⏱️ Tidsödande administration</h3>
+                    <p>Anhöriga spenderar i snitt 40+ timmar på att kontakta kundtjänster, bevisa bortgång, och stänga konton.</p>
+                    <p class="impact">Resultat: Stress och frustration i en redan svår tid</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>💸 Ekonomisk förlust</h3>
+                    <p>Prenumerationer fortsätter ticka, onödiga juridiska kostnader uppstår, digitala tillgångar (krypto, domäner) går förlorade.</p>
+                    <p class="impact">Resultat: Genomsnittsdödsbö förlorar 15 000-50 000 kr</p>
+                </div>
+                
+                <div class="problem-card">
+                    <h3>❓ Osäkerhet om önskemål</h3>
+                    <p>Anhöriga vet inte vad den avlidne ville. Ska sociala medier raderas eller bli minnessidor? Vilken musik ville de ha på begravningen?</p>
+                    <p class="impact">Resultat: Ånger och skuldkänslor över felaktiga beslut</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section id="solution" class="solution">
+        <div class="container">
+            <div class="section-title light">
+                <h2>Vår lösning</h2>
+                <p>Automatiserad digital döstädning via BankID och SPAR</p>
+            </div>
+            
+            <div class="solution-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🏦</div>
+                    <h3>BankID-verifierad</h3>
+                    <p>Juridiskt säker identitet. Samma tillit som internetbank. 8.5M svenskar använder redan BankID dagligen.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>SPAR-automation</h3>
+                    <p>Automatisk bevakning via Skatteverkets register. När bortgång registreras aktiveras allt automatiskt - ingen manual kontakt krävs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Zero-knowledge kryptering</h3>
+                    <p>End-to-end kryptering. Inte ens vi kan läsa dina meddelanden. Svenska servrar, GDPR-compliant.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Begravningsönskemål</h3>
+                    <p>Dokumentera alla begravningsönskemål. Ceremoni, musik, plats - allt blir tillgängligt för anhöriga när det behövs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💌</div>
+                    <h3>Sista hälsningar</h3>
+                    <p>Spela in video, skriv brev, schemalägg meddelanden. Ditt eftermäle på dina villkor.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Social Media Management</h3>
+                    <p>Automatisk omvandling till minnessida eller radering enligt dina instruktioner. Facebook, Instagram, LinkedIn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo -->
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interaktiv Demo</h2>
+                <p>Så fungerar användarresan</p>
+            </div>
+            
+            <div class="phone-mockup">
+                <div class="phone-screen">
+                    <!-- Screen 1: BankID Login -->
+                    <div class="screen active" id="screen-1">
+                        <div class="screen-header">
+                            <h2>Välkommen</h2>
+                        </div>
+                        <p style="text-align: center; margin-bottom: 2rem; color: #718096;">
+                            Legitimera dig säkert med BankID för att börja din digitala döstädning
+                        </p>
+                        <div class="bankid-qr">🔐</div>
+                        <p style="text-align: center; color: #a0aec0; font-size: 0.9rem;">
+                            Scanna QR-koden med BankID-appen
+                        </p>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 2rem;" onclick="nextScreen(2)">
+                            Simulera BankID-inloggning →
+                        </button>
+                    </div>
+                    
+                    <!-- Screen 2: Dashboard -->
+                    <div class="screen" id="screen-2">
+                        <div class="screen-header">
+                            <h2>Hej, Anna!</h2>
+                        </div>
+                        <div style="background: #e6fffa; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 4px solid #38b2ac;">
+                            <p style="color: #234e52; font-weight: 600; margin-bottom: 0.5rem;">✓ BankID-verifierad</p>
+                            <p style="color: #285e61; font-size: 0.9rem;">Din SPAR-bevakning är aktiv</p>
+                        </div>
+                        
+                        <div style="display: grid; gap: 1rem;">
+                            <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px; cursor: pointer;" onclick="nextScreen(3)">
+                                <h3 style="color: #2d3748; margin-bottom: 0.5rem;">📝 Begravningsönskemål</h3>
+                                <p style="color: #718096; font-size: 0.9rem;">Dokumentera dina begravningsönskemål</p>
+                                <p style="color: #667eea; font-size: 0.8rem; margin-top: 0.5rem;">50% färdigt →</p>
+                            </div>
+                            
+                            <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px;">
+                                <h3 style="color: #2d3748; margin-bottom: 0.5rem;">👥 Anhöriga</h3>
+                                <p style="color: #718096; font-size: 0.9rem;">3 personer tillagda</p>
+                            </div>
+                            
+                            <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px;">
+                                <h3 style="color: #2d3748; margin-bottom: 0.5rem;">💌 Sista hälsningar</h3>
+                                <p style="color: #718096; font-size: 0.9rem;">1 meddelande skapat</p>
+                            </div>
+                            
+                            <div style="background: #f7fafc; padding: 1.5rem; border-radius: 8px;">
+                                <h3 style="color: #2d3748; margin-bottom: 0.5rem;">🌐 Sociala medier</h3>
+                                <p style="color: #718096; font-size: 0.9rem;">2 konton kopplade</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Screen 3: Funeral Wishes -->
+                    <div class="screen" id="screen-3">
+                        <div class="screen-header">
+                            <h2>Begravningsönskemål</h2>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Typ av ceremoni</label>
+                            <select>
+                                <option>Borgerlig</option>
+                                <option>Svenska kyrkan</option>
+                                <option>Annat samfund</option>
+                                <option>Ingen ceremoni</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Särskild plats eller önskemål</label>
+                            <textarea placeholder="T.ex. 'Kan jag bli strödd vid den stora eken i trädgården?'">Jag vill bli kremerad och strödd vid havet utanför Mölle där jag växte upp.</textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Musik och psalmer</label>
+                            <input type="text" placeholder="T.ex. Psalm 297, Gabriel's Oboe" value="Psalm 297, Time To Say Goodbye">
+                        </div>
+                        
+                        <button class="btn btn-primary" style="width: 100%;" onclick="nextScreen(4)">
+                            Spara önskemål
+                        </button>
+                    </div>
+                    
+                    <!-- Screen 4: Completion -->
+                    <div class="screen" id="screen-4">
+                        <div style="text-align: center; padding: 3rem 0;">
+                            <div style="font-size: 5rem; margin-bottom: 1rem;">✓</div>
+                            <h2 style="color: #2d3748; margin-bottom: 1rem;">Allt är klart!</h2>
+                            <p style="color: #718096; line-height: 1.6; margin-bottom: 2rem;">
+                                Din digitala döstädning är nu komplett. Dina önskemål är säkert sparade och kommer automatiskt aktiveras via SPAR när dagen kommer.
+                            </p>
+                            <div style="background: #e6fffa; padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem; border-left: 4px solid #38b2ac;">
+                                <p style="color: #234e52; font-weight: 600; margin-bottom: 0.5rem;">🛡️ Skyddad med BankID</p>
+                                <p style="color: #285e61; font-size: 0.9rem; margin-bottom: 1rem;">Zero-knowledge kryptering aktiv</p>
+                                <p style="color: #234e52; font-weight: 600; margin-bottom: 0.5rem;">⚡ SPAR-bevakning aktiv</p>
+                                <p style="color: #285e61; font-size: 0.9rem;">Automatisk aktivering vid bortgång</p>
+                            </div>
+                            <button class="btn btn-primary" style="width: 100%;" onclick="nextScreen(1)">
+                                Starta om demon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-controls">
+                <button onclick="nextScreen(1)" id="btn-1" class="active">1. BankID</button>
+                <button onclick="nextScreen(2)" id="btn-2">2. Dashboard</button>
+                <button onclick="nextScreen(3)" id="btn-3">3. Begravningsönskemål</button>
+                <button onclick="nextScreen(4)" id="btn-4">4. Klart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model -->
+    <section id="business" class="business">
+        <div class="container">
+            <div class="section-title">
+                <h2>Affärsmodell</h2>
+                <p>Skalbar freemium med viral loop</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Gratis</h3>
+                    <div class="price">0 kr<span class="price-period">/mån</span></div>
+                    <ul>
+                        <li>BankID-verifiering</li>
+                        <li>Begravningsönskemål</li>
+                        <li>3 anhöriga</li>
+                        <li>1 sista hälsning</li>
+                        <li>SPAR-bevakning (6 mån väntetid)</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <div class="price">49 kr<span class="price-period">/mån</span></div>
+                    <ul>
+                        <li>Allt i Gratis</li>
+                        <li>Obegränsat antal anhöriga</li>
+                        <li>Obegränsade hälsningar</li>
+                        <li>Omedelbar SPAR-aktivering</li>
+                        <li>5 GB krypterat valv</li>
+                        <li>Prioriterad support</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Livstid</h3>
+                    <div class="price">990 kr<span class="price-period">engång</span></div>
+                    <ul>
+                        <li>Allt i Premium</li>
+                        <li>Betala en gång</li>
+                        <li>Gäller livet ut</li>
+                        <li>10 GB krypterat valv</li>
+                        <li>VIP-support</li>
+                        <li>Early access till nya funktioner</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 4rem; padding: 3rem; background: #f7fafc; border-radius: 12px;">
+                <h3 style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">Intäktsprognoser</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem;">
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 1rem;">År 1</h4>
+                        <p style="margin-bottom: 0.5rem;"><strong>10 000</strong> gratis-användare</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>1 000</strong> premium (49 kr/mån)</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>200</strong> livstid (990 kr)</p>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; color: #48bb78; font-weight: 700;">ARR: ~786 000 kr</p>
+                    </div>
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 1rem;">År 2</h4>
+                        <p style="margin-bottom: 0.5rem;"><strong>50 000</strong> gratis-användare</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>5 000</strong> premium</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>1 000</strong> livstid</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>2 B2B-partners</strong> (1500 users)</p>
+                        <p style="margin-top: 1rem; font-size: 1.5rem; color: #48bb78; font-weight: 700;">ARR: ~4 380 000 kr</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; padding: 2rem; background: white; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <h4 style="margin-bottom: 1rem;">Viral Loop-mekanism</h4>
+                    <p style="color: #4a5568; line-height: 1.6;">
+                        Varje gratis användare fyller i 3 anhöriga. Vid bortgång får dessa tillgång till arkivet + inbjudan att skapa sitt eget. <strong>K-factor: 0.8-1.2</strong> (varje användare genererar nästan 1 ny användare organiskt).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Section -->
+    <section id="market" class="market">
+        <div class="container">
+            <div class="section-title light">
+                <h2>Marknadspotential</h2>
+                <p>Sverige först - sedan Norden</p>
+            </div>
+            
+            <div class="market-stats">
+                <div class="market-card">
+                    <h3>🇸🇪 Total Addressable Market (TAM)</h3>
+                    <div class="big-number">2.1M</div>
+                    <p style="margin-bottom: 1rem;">Svenskar 50+ (primär målgrupp)</p>
+                    <p style="opacity: 0.9; font-size: 0.95rem;">Vid 10% penetration & 49 kr/mån = 123M kr ARR endast i Sverige</p>
+                </div>
+                
+                <div class="market-card">
+                    <h3>🏦 Konkurrensfördel</h3>
+                    <div class="big-number">8.5M</div>
+                    <p style="margin-bottom: 1rem;">BankID-användare i Sverige</p>
+                    <p style="opacity: 0.9; font-size: 0.95rem;">Ingen konkurrent har BankID + SPAR-integration. Detta är vår "moat" - tekniskt och juridiskt omöjligt att kopiera utan svensk infrastruktur.</p>
+                </div>
+                
+                <div class="market-card">
+                    <h3>📈 Tillväxtmarknad</h3>
+                    <div class="big-number">+32%</div>
+                    <p style="margin-bottom: 1rem;">Årlig tillväxt i death-tech sektorn</p>
+                    <p style="opacity: 0.9; font-size: 0.95rem;">Global death-tech marknad beräknas nå $2.8B år 2027. Vi tar position i en outvecklad marknad.</p>
+                </div>
+                
+                <div class="market-card">
+                    <h3>🌍 Nordisk expansion</h3>
+                    <div class="big-number">27M</div>
+                    <p style="margin-bottom: 1rem;">Totalt i Norden (SE/NO/DK/FI)</p>
+                    <p style="opacity: 0.9; font-size: 0.95rem;">Norge har BankID Norge, Danmark har MitID, Finland har FTN. Samma teknisk modell fungerar.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; backdrop-filter: blur(10px);">
+                <h3 style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">B2B White-label Potential</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">⚰️</div>
+                        <h4>Begravningsbyråer</h4>
+                        <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.5rem;">Fonus, Ignis, Fenix</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏦</div>
+                        <h4>Banker</h4>
+                        <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.5rem;">Swedbank, SEB, Nordea</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛡️</div>
+                        <h4>Försäkringsbolag</h4>
+                        <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.5rem;">Folksam, If, Länsförsäkringar</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">👴</div>
+                        <h4>Pensionärsorg</h4>
+                        <p style="opacity: 0.9; font-size: 0.9rem; margin-top: 0.5rem;">PRO, SPF Seniorerna</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; opacity: 0.9;">
+                    <strong>Revenue model:</strong> 25 kr/användare/månad (white-label) + 50 000 kr setup-fee per partner
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Section -->
+    <section id="tech" class="tech">
+        <div class="container">
+            <div class="section-title">
+                <h2>Teknisk Arkitektur</h2>
+                <p>Modern, skalbar, säker</p>
+            </div>
+            
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <div class="tech-icon">⚛️</div>
+                    <h4>React Native</h4>
+                    <p>iOS/Android + PWA med en kodbas</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">🔷</div>
+                    <h4>Next.js + tRPC</h4>
+                    <p>Type-safe API, serverless</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">🐘</div>
+                    <h4>PostgreSQL</h4>
+                    <p>Supabase (EU) eller Bahnhof</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">🔐</div>
+                    <h4>Kryptering</h4>
+                    <p>AES-256, zero-knowledge</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">🏦</div>
+                    <h4>BankID</h4>
+                    <p>GrandID eller Freja eID+</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">📊</div>
+                    <h4>SPAR API</h4>
+                    <p>Via Roaring eller direkt</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">☁️</div>
+                    <h4>Hosting</h4>
+                    <p>Vercel (MVP) → Bahnhof</p>
+                </div>
+                
+                <div class="tech-item">
+                    <div class="tech-icon">🛡️</div>
+                    <h4>GDPR-compliant</h4>
+                    <p>Svenska servrar, EU-data</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 4rem; padding: 3rem; background: #f7fafc; border-radius: 12px;">
+                <h3 style="text-align: center; margin-bottom: 2rem; font-size: 1.8rem;">Säkerhet & Compliance</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🔐</div>
+                        <h4 style="margin-bottom: 0.5rem;">Zero-Knowledge</h4>
+                        <p style="color: #718096; font-size: 0.9rem;">Inte ens vi kan läsa dina krypterade meddelanden</p>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🇸🇪</div>
+                        <h4 style="margin-bottom: 0.5rem;">Svenska servrar</h4>
+                        <p style="color: #718096; font-size: 0.9rem;">All data lagras i Sverige enligt GDPR</p>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: white; border-radius: 8px;">
+                        <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🛡️</div>
+                        <h4 style="margin-bottom: 0.5rem;">Penetration tested</h4>
+                        <p style="color: #718096; font-size: 0.9rem;">Årlig säkerhetsaudit via Detectify</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="roadmap">
+        <div class="container">
+            <div class="section-title">
+                <h2>Utvecklings-Roadmap</h2>
+                <p>12 månader till 10 000 användare</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Månad 1-2</h3>
+                    <div class="phase">Fas 1: Beta</div>
+                    <ul>
+                        <li>MVP-utveckling klar</li>
+                        <li>BankID sandbox-integration</li>
+                        <li>100 testanvändare via PRO/SPF</li>
+                        <li>Användarfeedback & iteration</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Månad 3-4</h3>
+                    <div class="phase">Fas 2: SPAR-integration</div>
+                    <ul>
+                        <li>Produktions-avtal med SPAR (Roaring)</li>
+                        <li>Cron job för automatisk bevakning</li>
+                        <li>Email-notifieringssystem</li>
+                        <li>Security audit (Detectify)</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Månad 5-6</h3>
+                    <div class="phase">Fas 3: Soft Launch</div>
+                    <ul>
+                        <li>Partnerskap med 2 begravningsbyråer</li>
+                        <li>Pressrelease i Senioren, Vi Läser</li>
+                        <li>Instagram-kampanj #DigitalDöstädning</li>
+                        <li>Mål: 500 betalande kunder</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Månad 7-9</h3>
+                    <div class="phase">Fas 4: B2B-expansion</div>
+                    <ul>
+                        <li>White-label lösning för partners</li>
+                        <li>Pilotavtal med försäkringsbolag</li>
+                        <li>Workshop-serie hos Folksam/Länsförsäkringar</li>
+                        <li>Mål: 2 000 användare</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h3>Månad 10-12</h3>
+                    <div class="phase">Fas 5: Scale</div>
+                    <ul>
+                        <li>TV-reklam (november-högsäsong)</li>
+                        <li>Nordisk expansion (Norge pilot)</li>
+                        <li>Premium features: testamentsguide, krypto-valv</li>
+                        <li>Mål: 10 000 totala användare</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Teamet</h2>
+                <p>Erfarna grundare med rätt kompetens</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👤</div>
+                    <h3>Ola Marton</h3>
+                    <div class="role">Founder & CEO</div>
+                    <p>40 års erfarenhet som AD/Designer. Grundare av ScandinavianDesign.com (1996). Expert på produktvisualisering och UX.</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">💻</div>
+                    <h3>Lead Developer</h3>
+                    <div class="role">CTO (rekryteras)</div>
+                    <p>Erfaren fullstack-utvecklare med BankID & SPAR-integration. Bakgrund från fintech eller healthtech.</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">📈</div>
+                    <h3>Growth Lead</h3>
+                    <div class="role">CMO (rekryteras)</div>
+                    <p>Specialist på 50+ marknadsföring och viral growth. Erfaren från prenumerationstjänster eller insurtech.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 4rem; padding: 3rem; background: #f7fafc; border-radius: 12px; text-align: center;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Rådgivare</h3>
+                <p style="color: #4a5568; max-width: 700px; margin: 0 auto;">
+                    Vi söker rådgivare inom: <strong>Juridik</strong> (Ärvdabalken, GDPR), <strong>Försäkring</strong> (Folksam/Länsförsäkringar-kontakter), <strong>Death-tech</strong> (internationell erfarenhet från Everplans, Cake, etc)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta">
+        <div class="container">
+            <h2>Redo att investera i Sveriges digitala framtid?</h2>
+            <p>Vi söker 3-5 MSEK för att ta Digitalt Arv från MVP till skalning</p>
+            
+            <div class="cta-buttons">
+                <button class="cta-btn primary" onclick="alert('Tack för ditt intresse! Kontakta ola@scandinaviandesign.com för investor deck (PDF)')">
+                    Ladda ner Investor Deck
+                </button>
+                <button class="cta-btn secondary" onclick="alert('Boka möte via calendly.com/digitaltarv eller mejla ola@scandinaviandesign.com')">
+                    Boka möte
+                </button>
+            </div>
+            
+            <div style="margin-top: 4rem; padding: 3rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; backdrop-filter: blur(10px);">
+                <h3 style="text-align: center; margin-bottom: 2rem;">Användning av kapital (3 MSEK)</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">40%</div>
+                        <p style="font-weight: 600;">Produkt & Tech</p>
+                        <p style="opacity: 0.8; font-size: 0.9rem;">2 developers, infrastruktur</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">30%</div>
+                        <p style="font-weight: 600;">Marketing</p>
+                        <p style="opacity: 0.8; font-size: 0.9rem;">Digital, PR, partnerships</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">20%</div>
+                        <p style="font-weight: 600;">Legal & Compliance</p>
+                        <p style="opacity: 0.8; font-size: 0.9rem;">GDPR, SPAR-avtal, jurist</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">10%</div>
+                        <p style="font-weight: 600;">Operations</p>
+                        <p style="opacity: 0.8; font-size: 0.9rem;">Löner, kontor, misc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Demo navigation
+        let currentScreen = 1;
+        
+        function nextScreen(screenNum) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show target screen
+            document.getElementById('screen-' + screenNum).classList.add('active');
+            
+            // Update button states
+            document.querySelectorAll('.demo-controls button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('btn-' + screenNum).classList.add('active');
+            
+            currentScreen = screenNum;
+        }
+    </script>
+</body>
+</html>

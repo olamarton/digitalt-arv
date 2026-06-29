@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0D1F1C">
+<meta name="description" content="Nyckelvalvet.se — Din lösenordshanterare och digitala döstädning. Samla lösenord, konton och sista hälsningar på ett krypterat ställe. SPAR-bevakning aktiveras automatiskt.">
+<title>Nyckelvalvet.se — Digital döstädning och lösenordsvalv</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM — NYCKELVALVET.SE
+═══════════════════════════════════════════ */
+:root {
+  --bg:          #0D1F1C;
+  --surface:     #162E2A;
+  --surface2:    #1C3D38;
+  --surface3:    #234A44;
+  --border:      rgba(168,217,211,0.12);
+  --border-soft: rgba(168,217,211,0.06);
+  --brand:       #1E5C54;
+  --accent:      #2D8A7E;
+  --accent2:     #4DB6A8;
+  --highlight:   #A8D9D3;
+  --gold:        #C4A45A;
+  --gold-light:  #D4B87A;
+  --text:        #F0F7F6;
+  --text2:       #8BB8B3;
+  --text3:       #4A7A74;
+  --success:     #10b981;
+  --radius:      14px;
+  --radius-sm:   8px;
+  --radius-lg:   20px;
+  --shadow:      0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:   0 20px 60px rgba(0,0,0,0.5);
+  --tr:          0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ═══════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════ */
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent2);
+  background: rgba(45,138,126,0.12);
+  border: 1px solid rgba(45,138,126,0.25);
+  padding: 6px 14px;
+  border-radius: 100px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.section-sub {
+  font-size: 18px;
+  color: var(--text2);
+  max-width: 600px;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: 68px;
+  background: rgba(13,31,28,0.85);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border-bottom: 1px solid var(--border-soft);
+  transition: background var(--tr), box-shadow var(--tr);
+}
+.nav.scrolled {
+  background: rgba(13,31,28,0.96);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.nav-logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(45,138,126,0.4);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  display: block;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text2);
+  border-radius: var(--radius-sm);
+  transition: color var(--tr), background var(--tr);
+}
+.nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-demo {
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all var(--tr);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-demo:hover { border-color: var(--accent); color: var(--text); background: var(--surface2); }
+
+.btn-login {
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: all var(--tr);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-login:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(45,138,126,0.4); }
+.btn-login:active { transform: translateY(0); }
+
+/* Hamburger */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.25s ease;
+  transform-origin: center;
+}
+.nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile menu */
+.nav-mobile {
+  display: none;
+  position: fixed;
+  top: 68px; left: 0; right: 0;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+  padding: 16px 24px 24px;
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+/* display:block set here so it works at ALL viewport sizes */
+.nav-mobile.open {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.nav-mobile-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+.nav-mobile-links a {
+  display: block;
+  padding: 12px 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border-soft);
+  transition: color var(--tr);
+}
+.nav-mobile-links a:hover { color: var(--text); }
+.nav-mobile-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.btn-demo-mobile, .btn-login-mobile {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-align: center;
+  transition: all var(--tr);
+}
+.btn-demo-mobile {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-login-mobile {
+  background: var(--accent);
+  border: none;
+  color: white;
+}
+.btn-login-mobile:hover { background: var(--accent2); }
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 120px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(45,138,126,0.18) 0%, rgba(30,92,84,0.08) 50%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-glow-2 {
+  position: absolute;
+  bottom: -10%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(196,164,90,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  background: rgba(196,164,90,0.1);
+  border: 1px solid rgba(196,164,90,0.25);
+  padding: 7px 16px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+}
+
+.hero-title {
+  font-size: clamp(38px, 6.5vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent2) 0%, var(--highlight) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: clamp(17px, 2vw, 20px);
+  color: var(--text2);
+  max-width: 580px;
+  margin: 0 auto 40px;
+  line-height: 1.65;
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.btn-hero-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-size: 16px;
+  font-weight: 700;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--tr);
+  box-shadow: 0 4px 20px rgba(45,138,126,0.35);
+}
+.btn-hero-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(45,138,126,0.45); }
+.btn-hero-primary:active { transform: translateY(0); }
+
+.btn-hero-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--tr);
+}
+.btn-hero-secondary:hover { border-color: var(--accent); color: var(--text); background: rgba(45,138,126,0.08); }
+
+.hero-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text3);
+}
+.trust-item .trust-dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hero-screen {
+  margin-top: 80px;
+  position: relative;
+  max-width: 880px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-screen-frame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(45,138,126,0.1);
+}
+.hero-screen-bar {
+  background: var(--surface2);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.screen-dot { width: 10px; height: 10px; border-radius: 50%; }
+.screen-dot.r { background: #ef4444; }
+.screen-dot.y { background: #f59e0b; }
+.screen-dot.g { background: #10b981; }
+.screen-url {
+  flex: 1;
+  background: var(--surface);
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  margin: 0 8px;
+}
+.hero-screen-content {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.mock-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.mock-card-icon { font-size: 28px; margin-bottom: 10px; }
+.mock-card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.mock-card-sub { font-size: 12px; color: var(--text2); }
+.mock-card-badge {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(45,138,126,0.15);
+  color: var(--accent2);
+  font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════
+   PROBLEM / TENSION
+═══════════════════════════════════════════ */
+#problem {
+  padding: 100px 0;
+  border-top: 1px solid var(--border-soft);
+  background: linear-gradient(180deg, transparent 0%, rgba(22,46,42,0.3) 50%, transparent 100%);
+}
+
+.problem-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.problem-stat {
+  font-size: clamp(80px, 12vw, 140px);
+  font-weight: 900;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent2) 0%, var(--highlight) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.problem-stat-label {
+  font-size: 18px;
+  color: var(--text2);
+  font-weight: 500;
+  margin-bottom: 40px;
+}
+
+.problem-questions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.problem-q {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 15px;
+  color: var(--text2);
+}
+.problem-q-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+.problem-text .section-title { margin-bottom: 20px; }
+.problem-body {
+  font-size: 17px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.problem-body strong { color: var(--text); font-weight: 600; }
+
+.problem-origin {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text3);
+  font-weight: 500;
+}
+.origin-flag { font-size: 18px; }
+
+/* ═══════════════════════════════════════════
+   HUR DET FUNGERAR
+═══════════════════════════════════════════ */
+#hur-det-fungerar {
+  padding: 100px 0;
+}
+
+.steps-header { text-align: center; margin-bottom: 64px; }
+.steps-header .section-sub { margin: 0 auto; }
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  position: relative;
+}
+
+.steps-line {
+  position: absolute;
+  top: 48px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), var(--accent), var(--border), transparent);
+  z-index: 0;
+}
+
+.step-card {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px;
+  text-align: center;
+}
+
+.step-num {
+  width: 52px;
+  height: 52px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent2);
+  margin: 0 auto 24px;
+  position: relative;
+  transition: all var(--tr);
+}
+.step-card:hover .step-num {
+  border-color: var(--accent);
+  background: rgba(45,138,126,0.1);
+  box-shadow: 0 0 0 6px rgba(45,138,126,0.08);
+}
+
+.step-icon {
+  font-size: 28px;
+  margin-bottom: 14px;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
+.step-body {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   TJÄNSTER / FEATURES
+═══════════════════════════════════════════ */
+#tjanster {
+  padding: 100px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(22,46,42,0.2) 50%, transparent 100%);
+}
+
+.features-header { text-align: center; margin-bottom: 64px; }
+.features-header .section-sub { margin: 0 auto; }
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  transition: all var(--tr);
+  position: relative;
+  overflow: hidden;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(45,138,126,0.04) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--tr);
+}
+.feature-card:hover { border-color: rgba(45,138,126,0.35); transform: translateY(-3px); box-shadow: var(--shadow); }
+.feature-card:hover::before { opacity: 1; }
+
+.feature-card.highlight {
+  border-color: rgba(196,164,90,0.3);
+  background: linear-gradient(135deg, var(--surface) 0%, rgba(196,164,90,0.04) 100%);
+}
+.feature-card.highlight:hover { border-color: rgba(196,164,90,0.5); }
+
+.feature-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(45,138,126,0.12);
+  border: 1px solid rgba(45,138,126,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.feature-card.highlight .feature-icon-wrap {
+  background: rgba(196,164,90,0.12);
+  border-color: rgba(196,164,90,0.2);
+}
+
+.feature-title {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.feature-body {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+.feature-tag {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent2);
+}
+.feature-card.highlight .feature-tag { color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   FÖR VEM
+═══════════════════════════════════════════ */
+#for-vem {
+  padding: 100px 0;
+}
+
+.personas-header { text-align: center; margin-bottom: 64px; }
+.personas-header .section-sub { margin: 0 auto; }
+
+.personas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.persona-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  transition: all var(--tr);
+}
+.persona-card:hover { border-color: rgba(45,138,126,0.3); transform: translateY(-2px); }
+
+.persona-icon {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.persona-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.persona-body {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   AFFÄRSMODELL / PRISER
+═══════════════════════════════════════════ */
+#affarsmodell {
+  padding: 100px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(22,46,42,0.25) 50%, transparent 100%);
+}
+
+.pricing-header { text-align: center; margin-bottom: 64px; }
+.pricing-header .section-sub { margin: 0 auto; }
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.pricing-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px;
+  transition: all var(--tr);
+}
+.pricing-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.pricing-card.popular {
+  background: linear-gradient(135deg, var(--surface2) 0%, var(--surface) 100%);
+  border-color: rgba(45,138,126,0.4);
+  box-shadow: 0 0 0 1px rgba(45,138,126,0.15), var(--shadow);
+  position: relative;
+}
+.popular-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: 100px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.pricing-card.lifetime { border-color: rgba(196,164,90,0.3); }
+
+.plan-name {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+.pricing-card.popular .plan-name { color: var(--accent2); }
+.pricing-card.lifetime .plan-name { color: var(--gold); }
+
+.plan-price {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.plan-price span {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text2);
+  letter-spacing: 0;
+}
+
+.plan-tagline {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-soft);
+  min-height: 44px;
+}
+
+.plan-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.plan-features li .check {
+  color: var(--success);
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.plan-cta {
+  width: 100%;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  transition: all var(--tr);
+}
+.plan-cta.ghost { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+.plan-cta.ghost:hover { background: var(--surface3); border-color: var(--accent); }
+.plan-cta.primary { background: var(--accent); color: white; }
+.plan-cta.primary:hover { background: var(--accent2); transform: translateY(-1px); }
+.plan-cta.gold { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%); color: #0D1F1C; }
+.plan-cta.gold:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(196,164,90,0.3); }
+
+.pricing-note {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text3);
+  margin-top: 28px;
+}
+
+/* ═══════════════════════════════════════════
+   SÄKERHET & GDPR
+═══════════════════════════════════════════ */
+#sakerhet {
+  padding: 100px 0;
+}
+
+.security-header { margin-bottom: 64px; }
+
+.security-inner {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.security-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.security-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: all var(--tr);
+}
+.security-item:hover { border-color: rgba(45,138,126,0.3); }
+
+.security-item-icon { font-size: 28px; margin-bottom: 12px; }
+.security-item-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+.security-item-body { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+.security-text .section-title { margin-bottom: 20px; }
+.security-text .section-sub { margin-bottom: 36px; }
+
+.security-quote {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 24px 28px;
+  font-size: 16px;
+  font-style: italic;
+  color: var(--text2);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.security-quote cite {
+  display: block;
+  font-style: normal;
+  font-size: 13px;
+  color: var(--text3);
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.security-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
+
+/* ═══════════════════════════════════════════
+   FAQ
+═══════════════════════════════════════════ */
+#faq {
+  padding: 100px 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(22,46,42,0.2) 50%, transparent 100%);
+}
+
+.faq-inner {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.faq-sidebar .section-title { margin-bottom: 16px; }
+.faq-sidebar p { font-size: 16px; color: var(--text2); line-height: 1.65; }
+
+.faq-list { display: flex; flex-direction: column; gap: 2px; }
+
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--tr);
+}
+.faq-item:hover { border-color: rgba(45,138,126,0.3); }
+
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 20px 24px;
+  text-align: left;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.faq-chevron {
+  font-size: 18px;
+  color: var(--text3);
+  transition: transform 0.25s ease, color var(--tr);
+  flex-shrink: 0;
+}
+.faq-item.open .faq-chevron { transform: rotate(180deg); color: var(--accent2); }
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.25s ease;
+  padding: 0 24px;
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+.faq-item.open .faq-a { max-height: 300px; padding: 0 24px 20px; }
+
+/* ═══════════════════════════════════════════
+   FINAL CTA
+═══════════════════════════════════════════ */
+#final-cta {
+  padding: 120px 0;
+}
+
+.cta-inner {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 72px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.cta-inner::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 300px;
+  background: radial-gradient(ellipse at center, rgba(45,138,126,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-inner .section-title { font-size: clamp(30px, 4vw, 44px); margin-bottom: 16px; }
+.cta-inner .section-sub { margin: 0 auto 40px; font-size: 17px; }
+.cta-inner .hero-cta { margin-bottom: 20px; }
+.cta-note { font-size: 13px; color: var(--text3); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  border-top: 1px solid var(--border-soft);
+  padding: 60px 0 40px;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footer-brand { }
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+.footer-tagline {
+  font-size: 14px;
+  color: var(--text3);
+  line-height: 1.65;
+  margin-bottom: 20px;
+  max-width: 260px;
+}
+.footer-company {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.8;
+}
+
+.footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: var(--text2);
+  padding: 5px 0;
+  transition: color var(--tr);
+}
+.footer-col a:hover { color: var(--text); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border-soft);
+  padding-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.footer-copyright {
+  font-size: 13px;
+  color: var(--text3);
+}
+.footer-legal {
+  display: flex;
+  gap: 20px;
+}
+.footer-legal a {
+  font-size: 13px;
+  color: var(--text3);
+  transition: color var(--tr);
+}
+.footer-legal a:hover { color: var(--text2); }
+
+/* ═══════════════════════════════════════════
+   DEMO MODAL
+═══════════════════════════════════════════ */
+.demo-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(10,24,22,0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.demo-modal.open {
+  display: flex;
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+.demo-modal-inner {
+  width: 100%;
+  max-width: 1100px;
+  height: 90vh;
+  max-height: 800px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.7);
+  transform: translateY(20px);
+  animation: slideUp 0.3s ease forwards;
+}
+@keyframes slideUp { to { transform: translateY(0); } }
+
+.demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.demo-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.demo-dots { display: flex; gap: 6px; }
+.demo-header-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+}
+.demo-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  background: rgba(196,164,90,0.15);
+  border: 1px solid rgba(196,164,90,0.3);
+  color: var(--gold);
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.demo-close {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 20px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all var(--tr);
+}
+.demo-close:hover { color: var(--text); background: var(--surface); }
+
+.demo-iframe {
+  flex: 1;
+  border: none;
+  width: 100%;
+}
+
+/* ESC hint */
+.demo-esc-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(240,247,246,0.3);
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL ANIMATIONS
+   Gated on .js-ready so content is always
+   visible if JS hasn't loaded yet.
+═══════════════════════════════════════════ */
+.js-ready .reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
+.js-ready .reveal-delay-1 { transition-delay: 0.1s; }
+.js-ready .reveal-delay-2 { transition-delay: 0.2s; }
+.js-ready .reveal-delay-3 { transition-delay: 0.3s; }
+.js-ready .reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-actions .btn-login { display: none; }
+  .nav-actions .btn-demo { display: none; }
+  .nav-burger { display: flex; }
+  .nav-mobile { display: block; }
+
+  .problem-inner { grid-template-columns: 1fr; gap: 40px; }
+  .problem-stat { font-size: 100px; }
+
+  .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+  .steps-line { display: none; }
+
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .personas-grid { grid-template-columns: 1fr; }
+
+  .pricing-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+
+  .security-inner { grid-template-columns: 1fr; gap: 48px; }
+  .security-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .faq-inner { grid-template-columns: 1fr; gap: 40px; }
+
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
+
+  .cta-inner { padding: 48px 36px; }
+
+  .hero-screen-content { grid-template-columns: 1fr 1fr; }
+  .hero-screen-content .mock-card:nth-child(3) { display: none; }
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤600px)
+═══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  html { scroll-padding-top: 68px; }
+
+  #hero { padding: 100px 0 60px; }
+  .hero-title { font-size: 36px; }
+  .hero-sub { font-size: 16px; }
+  .btn-hero-primary { padding: 14px 20px; font-size: 15px; }
+  .btn-hero-secondary { padding: 13px 18px; font-size: 14px; }
+  .hero-trust { gap: 16px; }
+  .trust-item { font-size: 12px; }
+  .hero-screen { margin-top: 48px; }
+  .hero-screen-content { grid-template-columns: 1fr; gap: 10px; padding: 20px; }
+  .hero-screen-content .mock-card:nth-child(2),
+  .hero-screen-content .mock-card:nth-child(3) { display: none; }
+
+  #problem, #hur-det-fungerar, #tjanster, #for-vem, #affarsmodell, #sakerhet, #faq, #final-cta {
+    padding: 72px 0;
+  }
+
+  .problem-stat { font-size: 80px; }
+  .problem-questions { gap: 10px; }
+
+  .steps-grid { grid-template-columns: 1fr; gap: 32px; }
+
+  .features-grid { grid-template-columns: 1fr; }
+
+  .security-grid { grid-template-columns: 1fr; }
+
+  .cta-inner { padding: 40px 24px; border-radius: var(--radius-lg); }
+  .cta-inner .hero-cta { flex-direction: column; }
+  .cta-inner .hero-cta .btn-hero-primary,
+  .cta-inner .hero-cta .btn-hero-secondary { width: 100%; justify-content: center; }
+
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+
+  .demo-modal { padding: 0; }
+  .demo-modal-inner { max-width: 100%; height: 100%; max-height: 100%; border-radius: 0; }
+  .demo-esc-hint { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAVIGATION ═══════════════════ -->
+<nav class="nav" id="mainNav">
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" onclick="scrollToTop(event)">
+        <div class="nav-logo-icon">🔑</div>
+        Nyckelvalvet.se
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#hur-det-fungerar">Hur det fungerar</a></li>
+        <li><a href="#tjanster">Tjänster</a></li>
+        <li><a href="#affarsmodell">Affärsmodell</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn-demo" onclick="openDemo()">
+          🔑 Prova demo
+        </button>
+        <button class="btn-login" onclick="openDemo()">
+          Logga in med BankID
+        </button>
+      </div>
+
+      <button class="nav-burger" id="navBurger" onclick="toggleMobileMenu()" aria-label="Meny">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile" id="navMobile">
+  <ul class="nav-mobile-links">
+    <li><a href="#hur-det-fungerar" onclick="closeMobileMenu()">Hur det fungerar</a></li>
+    <li><a href="#tjanster" onclick="closeMobileMenu()">Tjänster</a></li>
+    <li><a href="#affarsmodell" onclick="closeMobileMenu()">Affärsmodell</a></li>
+    <li><a href="#sakerhet" onclick="closeMobileMenu()">Säkerhet</a></li>
+  </ul>
+  <div class="nav-mobile-actions">
+    <button class="btn-demo-mobile" onclick="openDemo(); closeMobileMenu()">🔑 Prova demo</button>
+    <button class="btn-login-mobile" onclick="openDemo(); closeMobileMenu()">Logga in med BankID</button>
+  </div>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        🇸🇪 Byggt i Sverige — för Sverige
+      </div>
+      <h1 class="hero-title">
+        Dina digitala nycklar —<br>
+        <em>ordnade för alltid.</em>
+      </h1>
+      <p class="hero-sub">
+        Nyckelvalvet.se samlar lösenord, konton och sista hälsningar på ett krypterat ställe. När du inte längre är här sköts resten automatiskt — utan att dina anhöriga behöver ringa ett enda samtal.
+      </p>
+      <div class="hero-cta">
+        <button class="btn-hero-primary" onclick="openDemo()">
+          🔑 Kom igång gratis — BankID
+        </button>
+        <a href="#hur-det-fungerar" class="btn-hero-secondary">
+          Se hur det fungerar →
+        </a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-dot"></span>BankID — ingen separat registrering</div>
+        <div class="trust-item"><span class="trust-dot"></span>Svensk serverlagring</div>
+        <div class="trust-item"><span class="trust-dot"></span>Zero-knowledge-kryptering</div>
+        <div class="trust-item"><span class="trust-dot"></span>GDPR-certifierad</div>
+      </div>
+
+      <div class="hero-screen">
+        <div class="hero-screen-frame">
+          <div class="hero-screen-bar">
+            <div class="screen-dot r"></div>
+            <div class="screen-dot y"></div>
+            <div class="screen-dot g"></div>
+            <div class="screen-url">nyckelvalvet.se/app</div>
+          </div>
+          <div class="hero-screen-content">
+            <div class="mock-card">
+              <div class="mock-card-icon">🔑</div>
+              <div class="mock-card-title">Lösenordsvalvet</div>
+              <div class="mock-card-sub">24 konton sparade</div>
+              <div class="mock-card-badge">Krypterat</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-icon">📱</div>
+              <div class="mock-card-title">Sociala konton</div>
+              <div class="mock-card-sub">6 plattformar registrerade</div>
+              <div class="mock-card-badge">Instruktioner klara</div>
+            </div>
+            <div class="mock-card">
+              <div class="mock-card-icon">💌</div>
+              <div class="mock-card-title">Sista hälsningen</div>
+              <div class="mock-card-sub">Sparad och krypterad</div>
+              <div class="mock-card-badge">Redo att levereras</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PROBLEM ═══════════════════ -->
+<section id="problem">
+  <div class="container">
+    <div class="problem-inner">
+      <div class="problem-left reveal">
+        <div class="problem-stat">127</div>
+        <div class="problem-stat-label">digitala konton per genomsnittlig svensk</div>
+        <div class="problem-questions">
+          <div class="problem-q"><span class="problem-q-icon">💭</span> Vad händer med ditt Instagram-konto?</div>
+          <div class="problem-q"><span class="problem-q-icon">💭</span> Vem ska stänga av Netflix?</div>
+          <div class="problem-q"><span class="problem-q-icon">💭</span> Var finns lösenorden till din e-post?</div>
+          <div class="problem-q"><span class="problem-q-icon">💭</span> Vad var det du egentligen ville säga?</div>
+        </div>
+      </div>
+      <div class="problem-text reveal reveal-delay-2">
+        <div class="section-label">Varför Nyckelvalvet.se</div>
+        <h2 class="section-title">Lösenord i minnet löser ingenting. Inte på lång sikt.</h2>
+        <p class="problem-body">
+          En genomsnittlig svensk har över 127 digitala konton. Lösenord i minnet, i anteckningsblock, i telefonen — men <strong>sällan på ett ställe</strong> där rätt person hittar dem när det verkligen gäller.
+        </p>
+        <p class="problem-body">
+          62 % av oss använder lösenord som är för korta. Bara 16 % använder en lösenordshanterare. Och ingen har ett system för vad som händer när vi inte längre är här.
+        </p>
+        <p class="problem-body">
+          Nyckelvalvet.se är svaret på de frågorna — <strong>gjort i Sverige, för Sverige.</strong>
+        </p>
+        <div class="problem-origin">
+          <span class="origin-flag">🇸🇪</span>
+          Grundat i Malmö · BankID + SPAR-integration · GDPR
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HUR DET FUNGERAR ═══════════════════ -->
+<section id="hur-det-fungerar">
+  <div class="container">
+    <div class="steps-header reveal">
+      <div class="section-label">Hur det fungerar</div>
+      <h2 class="section-title">Fyra steg. En gång. För alltid ordnat.</h2>
+      <p class="section-sub">Du behöver inget nytt konto och inga nya lösenord att komma ihåg. Bara BankID — som du redan har.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="steps-line"></div>
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <div class="step-icon">🔐</div>
+        <div class="step-title">Logga in med BankID</div>
+        <div class="step-body">Ingen registrering, inga extra lösenord. Du är redan verifierad — vi hämtar ingenting utan ditt godkännande.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-icon">📦</div>
+        <div class="step-title">Samla det som betyder något</div>
+        <div class="step-body">Lösenord och konton. Digitala dokument. Instruktioner för sociala medier. En sista hälsning till dem du lämnar.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-icon">👥</div>
+        <div class="step-title">Välj vem som ska ha vad</div>
+        <div class="step-body">Ange dina närstående och bestäm vem som får tillgång till vad — och när. Du har alltid full kontroll.</div>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">04</div>
+        <div class="step-icon">🔔</div>
+        <div class="step-title">Vi bevakar SPAR automatiskt</div>
+        <div class="step-body">Via Folkbokföringen. Ingen behöver ringa oss. Ingen behöver veta vad de ska göra. När det händer — händer det rätt.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TJÄNSTER ═══════════════════ -->
+<section id="tjanster">
+  <div class="container">
+    <div class="features-header reveal">
+      <div class="section-label">Tjänster</div>
+      <h2 class="section-title">Allt på ett krypterat ställe</h2>
+      <p class="section-sub">Sex kärnfunktioner som täcker allt du behöver — från dagliga lösenord till det du vill lämna efter dig.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">🔑</div>
+        <div class="feature-title">Lösenordsvalvet</div>
+        <div class="feature-body">Lagra lösenord för e-post, streaming, bankärenden och allt däremellan. Starka lösenord, lättillgängliga för dig — oläsliga för alla andra.</div>
+        <div class="feature-tag">AES-256 krypterat</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap">📱</div>
+        <div class="feature-title">Sociala konton</div>
+        <div class="feature-body">Ange exakt vad som ska hända med varje konto — radering, minnesprofil eller att konton överlämnas. Plattform för plattform, beslut för beslut.</div>
+        <div class="feature-tag">Facebook · Instagram · LinkedIn</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap">💌</div>
+        <div class="feature-title">Sista hälsningen</div>
+        <div class="feature-body">Skriv ett meddelande till dina närmaste. Lägg till en bild. Det krypteras och levereras automatiskt — utan mellanhänder, utan förseningar.</div>
+        <div class="feature-tag">End-to-end krypterat</div>
+      </div>
+      <div class="feature-card highlight reveal">
+        <div class="feature-icon-wrap">📁</div>
+        <div class="feature-title">Begravningsönskemål</div>
+        <div class="feature-body">Begravningsönskemål, försäkringsuppgifter, äktenskapsförord, bouppteckning. Samla det som finns på papper på ett digitalt ställe dina anhöriga faktiskt hittar.</div>
+        <div class="feature-tag">Ingår i gratisplan</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap">🔔</div>
+        <div class="feature-title">SPAR-bevakning</div>
+        <div class="feature-body">Folkbokföringen bevakas automatiskt. Ingen manuell åtgärd krävs av dina anhöriga. Allt aktiveras i rätt ordning, med en inbyggd verifieringsperiod.</div>
+        <div class="feature-tag">Via Folkbokföringen</div>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap">🔒</div>
+        <div class="feature-title">Zero-knowledge</div>
+        <div class="feature-body">Dina lösenord och meddelanden krypteras med AES-256 innan de lämnar din enhet. Inte ens vi kan läsa dem. Det är poängen.</div>
+        <div class="feature-tag">Militärstandard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FÖR VEM ═══════════════════ -->
+<section id="for-vem">
+  <div class="container">
+    <div class="personas-header reveal">
+      <div class="section-label">För vem</div>
+      <h2 class="section-title">Gjort för dig som tänkt tanken</h2>
+      <p class="section-sub">De flesta skjuter upp det. Du behöver inte.</p>
+    </div>
+    <div class="personas-grid">
+      <div class="persona-card reveal">
+        <div class="persona-icon">🗂</div>
+        <div>
+          <div class="persona-title">Du som vill ha ordning</div>
+          <div class="persona-body">Du sköter ditt liv noggrant — jobbet, ekonomin, hemmet. Men det digitala livet är spritt över tjugo appar och lika många inloggningsuppgifter. Nyckelvalvet.se är din digitala ordning.</div>
+        </div>
+      </div>
+      <div class="persona-card reveal reveal-delay-1">
+        <div class="persona-icon">🤝</div>
+        <div>
+          <div class="persona-title">Du som vill skona dina närstående</div>
+          <div class="persona-body">Du vet vad ett dödsbo kan innebära. Tid, telefonnummer, lösenord som ingen känner till. Med Nyckelvalvet.se lämnar du inte ett kaos efter dig — du lämnar en nyckel.</div>
+        </div>
+      </div>
+      <div class="persona-card reveal">
+        <div class="persona-icon">💌</div>
+        <div>
+          <div class="persona-title">Du som vill säga något</div>
+          <div class="persona-body">Det finns saker man inte alltid hinner säga. En sista hälsning, krypterad och sparad, levereras automatiskt till dem du angett. Inga mellanhänder. Inga missförstånd.</div>
+        </div>
+      </div>
+      <div class="persona-card reveal reveal-delay-1">
+        <div class="persona-icon">🌿</div>
+        <div>
+          <div class="persona-title">Du som är i rätt ålder för att tänka framåt</div>
+          <div class="persona-body">Döstädning är ett begrepp som vunnit mark — det handlar om att skapa ro, inte om att ge upp. Nyckelvalvet.se är den digitala versionen: ett genomtänkt val, gjort i tid.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ AFFÄRSMODELL ═══════════════════ -->
+<section id="affarsmodell">
+  <div class="container">
+    <div class="pricing-header reveal">
+      <div class="section-label">Affärsmodell</div>
+      <h2 class="section-title">Välj vad som passar dig</h2>
+      <p class="section-sub">Gratis att komma igång. Uppgradera när du känner att du vill ha mer.</p>
+    </div>
+    <div class="pricing-grid">
+      <!-- Gratis -->
+      <div class="pricing-card reveal">
+        <div class="plan-name">Gratis</div>
+        <div class="plan-price">0 <span>kr</span></div>
+        <div class="plan-tagline">Alltid gratis — inga kreditkortsuppgifter</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> BankID-inloggning</li>
+          <li><span class="check">✓</span> Begravningsönskemål (begravningsönskemål)</li>
+          <li><span class="check">✓</span> Upp till 3 kontakter</li>
+          <li><span class="check">✓</span> 1 krypterat textmeddelande</li>
+          <li><span class="check">✓</span> SPAR-bevakning med 6 månaders fördröjning</li>
+        </ul>
+        <button class="plan-cta ghost" onclick="openDemo()">Kom igång gratis</button>
+      </div>
+
+      <!-- Premium -->
+      <div class="pricing-card popular reveal reveal-delay-1">
+        <div class="popular-badge">Rekommenderas</div>
+        <div class="plan-name">Premium</div>
+        <div class="plan-price">— <span>kr/mån</span></div>
+        <div class="plan-tagline">Full kontroll — utan kompromisser</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Allt i gratisplanen</li>
+          <li><span class="check">✓</span> Obegränsade konton och lösenord</li>
+          <li><span class="check">✓</span> Omedelbar SPAR-bevakning</li>
+          <li><span class="check">✓</span> Krypterat valv (5 GB)</li>
+          <li><span class="check">✓</span> Upp till 20 kontakter</li>
+          <li><span class="check">✓</span> Begravningsönskemål med dokumentuppladdning</li>
+          <li><span class="check">✓</span> Prioriterad support</li>
+        </ul>
+        <button class="plan-cta primary" onclick="openDemo()">Starta Premium</button>
+      </div>
+
+      <!-- Lifetime -->
+      <div class="pricing-card lifetime reveal reveal-delay-2">
+        <div class="plan-name">Lifetime</div>
+        <div class="plan-price">— <span>kr</span></div>
+        <div class="plan-tagline">Betala en gång. Ha det för alltid.</div>
+        <ul class="plan-features">
+          <li><span class="check">✓</span> Allt i Premium</li>
+          <li><span class="check">✓</span> Krypterat valv (10 GB)</li>
+          <li><span class="check">✓</span> Livstids åtkomst — inga framtida avgifter</li>
+          <li><span class="check">✓</span> VIP-support</li>
+          <li><span class="check">✓</span> Prioritet på nya funktioner</li>
+        </ul>
+        <button class="plan-cta gold" onclick="openDemo()">Köp Lifetime</button>
+      </div>
+    </div>
+    <p class="pricing-note reveal">Alla priser inklusive moms. Du kan avsluta när som helst. Betalning via Stripe — kortbetalning och Swish.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ SÄKERHET ═══════════════════ -->
+<section id="sakerhet">
+  <div class="container">
+    <div class="security-inner">
+      <div class="security-grid reveal">
+        <div class="security-item">
+          <div class="security-item-icon">🏛</div>
+          <div class="security-item-title">BankID-verifiering</div>
+          <div class="security-item-body">Sveriges mest betrodda e-legitimation. Ingen kan komma åt ditt valv utan din personliga verifiering.</div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">🔐</div>
+          <div class="security-item-title">AES-256-kryptering</div>
+          <div class="security-item-body">Militärstandard. Vi lagrar krypterat — inte klartext. Inte ens i databaser, inte ens i loggar.</div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">🇸🇪</div>
+          <div class="security-item-title">Svenska servrar</div>
+          <div class="security-item-body">All data lagras i Sverige. GDPR uppfylls inte bara på pappret — vi valde aktivt bort datacenter utanför EU.</div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">📋</div>
+          <div class="security-item-title">Zero-knowledge</div>
+          <div class="security-item-body">Inte ens vi kan läsa dina lösenord eller meddelanden. Det är ett tekniskt faktum — inte ett löfte.</div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">🗑</div>
+          <div class="security-item-title">Radering på begäran</div>
+          <div class="security-item-body">Du äger din data. En begäran tar bort allt — konton, lösenord, meddelanden, loggar. Inga undantag.</div>
+        </div>
+        <div class="security-item">
+          <div class="security-item-icon">📊</div>
+          <div class="security-item-title">Revisionslogg</div>
+          <div class="security-item-body">Varje känslig åtgärd loggas och är spårbar. Du ser alltid vad som hänt i ditt valv, och när.</div>
+        </div>
+      </div>
+      <div class="security-text reveal reveal-delay-2">
+        <div class="section-label">Säkerhet & GDPR</div>
+        <h2 class="section-title">Byggt för trygghet — från grunden</h2>
+        <p class="section-sub">Vi hanterar det känsligaste du har. Därför har vi inte råd att kompromissa.</p>
+        <blockquote class="security-quote">
+          "Vi bygger det vi själva skulle vilja använda — och vi bor i Sverige, lyder under GDPR och sover gott om nätterna."
+          <cite>— Nyckelvalvet.se, grundat i Malmö</cite>
+        </blockquote>
+        <div class="security-badges">
+          <div class="security-badge">🔒 GDPR</div>
+          <div class="security-badge">🇸🇪 Svensk serverlagring</div>
+          <div class="security-badge">🏛 BankID</div>
+          <div class="security-badge">♿ WCAG 2.1 AA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FAQ ═══════════════════ -->
+<section id="faq">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-sidebar reveal">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Vanliga frågor</h2>
+        <p>Har du en fråga som inte finns här? Hör av dig — vi svarar inom en arbetsdag.</p>
+      </div>
+      <div class="faq-list reveal reveal-delay-1">
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Behöver mina anhöriga göra något?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">Nej — och det är precis det som gör Nyckelvalvet.se unikt. Vi bevakar Folkbokföringen automatiskt via SPAR. När ett dödsfall registreras startar en inbyggd verifieringsperiod, varefter dina instruktioner och hälsningar levereras automatiskt till dem du angett. Inga samtal behöver ringas. Ingen behöver veta vad de ska göra eller vart de ska vända sig.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Kan jag lita på att ingen läser mina meddelanden?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">Ja — och det är inte bara ett löfte, det är ett tekniskt faktum. Vi använder en så kallad zero-knowledge-arkitektur, vilket innebär att dina meddelanden och lösenord krypteras med AES-256 direkt på din enhet innan de lagras. Det innebär att inte ens vi kan läsa dem, oavsett hur mycket vi ville. Det finns ingen nyckel hos oss att kompromissa med.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Vad skiljer Nyckelvalvet.se från 1Password eller Bitwarden?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">1Password och Bitwarden är utmärkta tjänster för att hantera lösenord i vardagen — men de löser inte frågan om vad som händer när du inte längre är här. Nyckelvalvet.se är byggt kring den frågan: BankID-verifiering, SPAR-bevakning, instruktioner för sociala konton och krypterade sista hälsningar. Det är en annan kategori av tjänst, med ett annat syfte.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Är mina uppgifter trygga om Nyckelvalvet.se läggs ner?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">Din data tillhör alltid dig. Du kan när som helst exportera allt i ett krypterat format som du förvarar själv. Vi har även en tydlig offboarding-policy: om tjänsten skulle upphöra informerar vi i god tid och ger dig full möjlighet att exportera och migrera dina uppgifter.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Kan jag ändra mina instruktioner i efterhand?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">Absolut. Ditt valv är alltid redigerbart — du kan lägga till konton, skriva om meddelanden, ändra kontakter och uppdatera instruktioner när du vill. Livet förändras, och din digitala döstädning bör kunna följa med. Det enda du inte kan ändra är det som redan levererats.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            Fungerar tjänsten om jag inte är tekniskt lagd?
+            <span class="faq-chevron">⌄</span>
+          </button>
+          <div class="faq-a">Ja. Nyckelvalvet.se är byggt för alla — inte bara de tekniskt intresserade. Du loggar in med BankID precis som du gör med din bank, och guidas steg för steg genom varje del. Om du fastnar finns support och vi svarar alltid inom en arbetsdag.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FINAL CTA ═══════════════════ -->
+<section id="final-cta">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="section-label" style="display:inline-flex; margin-bottom:24px;">Ta steget idag</div>
+      <h2 class="section-title">Det tar fem minuter.<br>Det räcker för alltid.</h2>
+      <p class="section-sub">Du behöver inget nytt konto, inget nytt lösenord. Bara BankID — som du redan har.</p>
+      <div class="hero-cta">
+        <button class="btn-hero-primary" onclick="openDemo()">
+          🔑 Kom igång gratis — BankID
+        </button>
+        <button class="btn-hero-secondary" onclick="openDemo()">
+          🔑 Prova demo först →
+        </button>
+      </div>
+      <p class="cta-note">Gratis att börja. Inga kreditkortsuppgifter krävs.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-icon" style="width:32px;height:32px;font-size:16px;">🔑</div>
+          Nyckelvalvet.se
+        </div>
+        <p class="footer-tagline">Digital döstädning och lösenordsvalv — byggt i Sverige, för Sverige.</p>
+        <div class="footer-company">
+          Scandinavian Design www AB<br>
+          Org.nr: 556450-6995<br>
+          Malmö, Sverige
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Produkt</h4>
+        <a href="#hur-det-fungerar">Hur det fungerar</a>
+        <a href="#tjanster">Tjänster</a>
+        <a href="#affarsmodell">Priser</a>
+        <a href="#sakerhet">Säkerhet</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Företag</h4>
+        <a href="#">Om oss</a>
+        <a href="#">Kontakt</a>
+        <a href="#">För begravningsbyråer</a>
+      </div>
+      <div class="footer-col">
+        <h4>Juridik</h4>
+        <a href="#">Integritetspolicy</a>
+        <a href="#">Användarvillkor</a>
+        <a href="#">Tillgänglighetsredogörelse</a>
+        <a href="#">GDPR</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        © 2026 Nyckelvalvet.se / Scandinavian Design www AB. Alla rättigheter förbehållna.<br>
+        BankID® är ett registrerat varumärke som tillhör Finansiell ID-Teknik BID AB.
+      </div>
+      <div class="footer-legal">
+        <a href="#">Integritetspolicy</a>
+        <a href="#">Villkor</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════ DEMO MODAL ═══════════════════ -->
+<div class="demo-modal" id="demoModal" onclick="handleModalClick(event)">
+  <div class="demo-modal-inner">
+    <div class="demo-header">
+      <div class="demo-header-left">
+        <div class="demo-dots">
+          <div class="screen-dot r"></div>
+          <div class="screen-dot y"></div>
+          <div class="screen-dot g"></div>
+        </div>
+        <span class="demo-header-title">Nyckelvalvet.se — Interaktiv demo</span>
+        <span class="demo-badge">DEMO</span>
+      </div>
+      <button class="demo-close" onclick="closeDemo()" aria-label="Stäng demo">✕</button>
+    </div>
+    <iframe class="demo-iframe" id="demoFrame" src="" title="Nyckelvalvet.se demo"></iframe>
+  </div>
+  <div class="demo-esc-hint">Tryck ESC för att stänga</div>
+</div>
+
+<!-- ═══════════════════ JAVASCRIPT ═══════════════════ */
+<script>
+// ── Nav scroll state ──
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Scroll to top ──
+function scrollToTop(e) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── Mobile menu ──
+let mobileOpen = false;
+function toggleMobileMenu() {
+  mobileOpen = !mobileOpen;
+  document.getElementById('navBurger').classList.toggle('open', mobileOpen);
+  document.getElementById('navMobile').classList.toggle('open', mobileOpen);
+  document.body.style.overflow = mobileOpen ? 'hidden' : '';
+}
+function closeMobileMenu() {
+  mobileOpen = false;
+  document.getElementById('navBurger').classList.remove('open');
+  document.getElementById('navMobile').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Demo — navigerar direkt till /demo.html ──
+function openDemo() {
+  closeMobileMenu();
+  window.location.href = '/demo.html';
+}
+
+// ── FAQ accordion ──
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── Scroll reveal ──
+// Add js-ready FIRST so CSS hides elements only when JS is running
+document.body.classList.add('js-ready');
+
+const reveals = document.querySelectorAll('.reveal');
+
+// Mark already-visible elements (above fold) as visible immediately
+reveals.forEach(el => {
+  const rect = el.getBoundingClientRect();
+  if (rect.top < window.innerHeight) {
+    el.classList.add('visible');
+  }
+});
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0, rootMargin: '0px 0px 60px 0px' });
+
+reveals.forEach(el => {
+  if (!el.classList.contains('visible')) observer.observe(el);
+});
+
+// ── Smooth nav link scroll (offset for sticky nav) ──
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
