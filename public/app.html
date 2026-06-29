@@ -139,7 +139,7 @@ textarea{resize:vertical;min-height:100px}
     <button class="nav-tab active" onclick="showTab('losenord',this)">Lösenord<span class="nbadge" id="b-losenord"></span></button>
     <button class="nav-tab" onclick="showTab('kanaler',this)">Sociala konton<span class="nbadge" id="b-kanaler"></span></button>
     <button class="nav-tab" onclick="showTab('kontakter',this)">Kontakter<span class="nbadge" id="b-kontakter"></span></button>
-    <button class="nav-tab" onclick="showTab('arkiv',this)">Vita arkivet<span class="nbadge" id="b-arkiv"></span></button>
+    <button class="nav-tab" onclick="showTab('arkiv',this)">Begravningsönskemål<span class="nbadge" id="b-arkiv"></span></button>
     <button class="nav-tab" onclick="showTab('halsning',this)">Hälsning<span class="nbadge" id="b-halsning"></span></button>
   </div>
 
@@ -202,10 +202,10 @@ textarea{resize:vertical;min-height:100px}
     </div>
   </div>
 
-  <!-- VITA ARKIVET -->
+  <!-- BEGRAVNINGSÖNSKEMÅL -->
   <div class="panel" id="panel-arkiv">
     <div class="card">
-      <div class="card-header"><div class="card-title">Vita arkivet</div></div>
+      <div class="card-header"><div class="card-title">Begravningsönskemål</div></div>
       <div class="card-desc">Begravningsönskemål och sista vilja — samlat på ett ställe.</div>
       <div class="field"><label class="field-label">Begravningstyp</label>
         <select id="burialType"><option value="">Välj...</option><option value="kremering">Kremering</option><option value="jordbegravning">Jordbegravning</option><option value="naturlig">Naturlig begravning</option><option value="vet_ej">Vet ej — anhöriga bestämmer</option></select>
@@ -223,9 +223,9 @@ textarea{resize:vertical;min-height:100px}
       </div>
       <div class="field"><label class="field-label">Musik</label><textarea id="musicWishes" placeholder="T.ex. Psalm 23, Johan Söderqvist — Långa vägen..." style="min-height:70px"></textarea></div>
       <div class="field"><label class="field-label">Övriga önskemål</label><textarea id="otherWishes" placeholder="Klädsel, gäster, kistval, platser som är viktiga..."></textarea></div>
-      <div class="btn-row"><button class="btn btn-primary" onclick="saveArchive()">Spara Vita arkivet</button></div>
+      <div class="btn-row"><button class="btn btn-primary" onclick="saveArchive()">Spara Begravningsönskemål</button></div>
     </div>
-    <div class="note-card"><strong style="color:var(--text)">Obs:</strong> Vita arkivet är personliga önskemål — inte ett juridiskt testamente. Bindande testamente kräver bevittning av två personer.</div>
+    <div class="note-card"><strong style="color:var(--text)">Obs:</strong> Begravningsönskemål är personliga önskemål — inte ett juridiskt testamente. Bindande testamente kräver bevittning av två personer.</div>
   </div>
 
   <!-- HÄLSNING -->
@@ -297,7 +297,7 @@ textarea{resize:vertical;min-height:100px}
       <button class="footer-link" onclick="switchTab('losenord')">Lösenord</button>
       <button class="footer-link" onclick="switchTab('kanaler')">Sociala konton</button>
       <button class="footer-link" onclick="switchTab('kontakter')">Kontakter</button>
-      <button class="footer-link" onclick="switchTab('arkiv')">Vita arkivet</button>
+      <button class="footer-link" onclick="switchTab('arkiv')">Begravningsönskemål</button>
       <button class="footer-link" onclick="switchTab('halsning')">Hälsning</button>
     </div>
     <div class="footer-col">
@@ -449,7 +449,7 @@ function handleImage(input){const f=input.files[0];if(!f)return;const r=new File
 function removeImage(){document.getElementById('imgPreview').style.display='none';document.getElementById('imgPreview').src='';document.getElementById('removeImgBtn').style.display='none';S.farewell.img='';}
 function saveFarewell(){S.farewell.text=document.getElementById('farewellText').value;save();toast('✓ Hälsning sparad');}
 function loadArchive(){const a=S.archive;if(a.burial)document.getElementById('burialType').value=a.burial;if(a.ceremony)document.getElementById('ceremonyType').value=a.ceremony;if(a.music)document.getElementById('musicWishes').value=a.music;if(a.other)document.getElementById('otherWishes').value=a.other;['fl_yes','fl_no','fl_donation','fl_specific'].forEach(id=>{if(a[id])document.getElementById(id).checked=true;});}
-function saveArchive(){S.archive={burial:document.getElementById('burialType').value,ceremony:document.getElementById('ceremonyType').value,music:document.getElementById('musicWishes').value,other:document.getElementById('otherWishes').value};['fl_yes','fl_no','fl_donation','fl_specific'].forEach(id=>{S.archive[id]=document.getElementById(id).checked;});save();toast('✓ Vita arkivet sparat');}
+function saveArchive(){S.archive={burial:document.getElementById('burialType').value,ceremony:document.getElementById('ceremonyType').value,music:document.getElementById('musicWishes').value,other:document.getElementById('otherWishes').value};['fl_yes','fl_no','fl_donation','fl_specific'].forEach(id=>{S.archive[id]=document.getElementById(id).checked;});save();toast('✓ Begravningsönskemål sparat');}
 function renderContacts(){
   const el=document.getElementById('contactList');
   if(!S.contacts.length){el.innerHTML='<div class="empty-msg">Inga kontakter tillagda ännu.</div>';return;}
